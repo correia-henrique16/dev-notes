@@ -1,15 +1,81 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../lib/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+enum Permission {
+  READONLY
+  EDITOR
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  name      String
+  userName  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notes       Notes[] // relação de 1 para muitos
+  tags        Tags[]
+  collabs     Collabs[]
+
+  @@map("user")
+}
+
+model Tags {
+  id        Int      @id @default(autoincrement())
+  name      String
+  userId    String?
+  color     String   @default("#e9dddd")
+
+  user      Users?       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notesTags NoteTags[]
+
+  @@map("tag")
+}
+
+model Notes {
+  id               Int        @id @default(autoincrement())
+  title            String
+  description      String     @db.Text
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  ownerId          String
+  isPublic         Boolean    @default(false)
+  publicPermission Permission @default(READONLY)
+
+  owner            Users       @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  notesTags        NoteTags[]
+  collabs          Collabs[]
+
+  @@map("note")
+}
+
+model NoteTags {
+  noteId Int
+  tagId  Int
+
+  note   Notes @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  tag    Tags  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([noteId, tagId])
+  @@map("noteTag")
+}
+
+model Collabs {
+  collabId     Int        @id @default(autoincrement())
+  noteId       Int
+  collaburator String
+  permission   Permission @default(READONLY)
+
+  note         Notes       @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  user         Users       @relation(fields: [collaburator], references: [id], onDelete: Cascade)
+
+  @@unique([noteId, collaburator])
+  @@map("collab")
 }
