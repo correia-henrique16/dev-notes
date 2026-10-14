@@ -1,0 +1,18 @@
+POST http://localhost:3335/signup
+Content-Type: application/json
+
+{
+    "name" : "Joaozin2",
+    "userName" : "Joaozin69",
+    "password" : "Pilho.16"
+}
+
+###
+
+POST http://localhost:3335/auth
+Content-Type: application/json
+
+{
+    "userName" : "Joaozin69",
+    "password" : "Pilho.1"
+}

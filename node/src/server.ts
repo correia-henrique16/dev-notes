@@ -2,6 +2,7 @@ import 'dotenv/config'
 import fastify from "fastify";
 import cors from '@fastify/cors'
 import { pingRoutes } from './routes/ping.routes.ts';
+import { userRoutes } from './routes/user.routes.ts';
 
 const server = fastify( {
     logger: true
@@ -13,6 +14,7 @@ await server.register(cors, {
 })
 
 await server.register(pingRoutes)
+await server.register(userRoutes)
 
 server.listen({
   port: Number(process.env.PORT) || 3335,
