@@ -14,5 +14,11 @@ Content-Type: application/json
 
 {
     "userName" : "Joaozin69",
-    "password" : "Pilho.1"
+    "password" : "Pilho.16"
 }
+
+###
+
+GET http://localhost:3335/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8

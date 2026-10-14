@@ -2,7 +2,8 @@ import { FastifyInstance } from "fastify";
 import { prisma } from '../lib/prisma.ts'
 import { registerSchema, loginSchema } from "../schemas/user.schema.ts";
 import {hash, compare} from "../lib/bcrypt.ts"
-import { signJWT, verifyJWT } from '../lib/jwt.ts'
+import { signJWT } from '../lib/jwt.ts'
+import { isAuthenticathed } from "../utils/isAuthenticathed.ts";
 
 export async function userRoutes(server: FastifyInstance) {
 
@@ -71,5 +72,32 @@ export async function userRoutes(server: FastifyInstance) {
         .send({
             accessToken
         })
+    })
+
+    server.get('/me', {preHandler: isAuthenticathed}, async (request, reply) => {
+        const userId = request.userId
+        const userName = request.userName
+
+        const user = await prisma.users.findUnique({
+            where: {
+                id: userId,
+                userName
+            }
+        })
+
+        if (!user) {
+            return reply.code(404)
+                .send({
+                    error: 'User not found!'
+                })
+        }
+
+        return reply.code(201)
+            .send({
+                id: userId,
+                userName: userName,
+                name: user.name,
+                createdAt: user.createdAt
+            })
     })
 }

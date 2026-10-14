@@ -6,6 +6,11 @@ if (!JWT_SECRET) {
   throw new Error('A variável de ambiente SECRET não está definida!')
 }
 
+export interface UserTokenPayload extends JwtPayload {
+    id: string
+    userName: string
+}
+
 export function verifyJWT(token: string) {
     try{
         return jwt.verify(token, JWT_SECRET)
