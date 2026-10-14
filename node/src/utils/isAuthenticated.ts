@@ -9,7 +9,7 @@ declare module 'fastify' {
   }
 }
 
-export async function isAuthenticathed (request: FastifyRequest, reply: FastifyReply) {
+export async function isAuthenticated (request: FastifyRequest, reply: FastifyReply) {
     const rawToken = request.headers?.authorization
 
     if (!rawToken || !rawToken.startsWith('Bearer ')) {

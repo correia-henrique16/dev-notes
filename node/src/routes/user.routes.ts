@@ -3,7 +3,7 @@ import { prisma } from '../lib/prisma.ts'
 import { registerSchema, loginSchema } from "../schemas/user.schema.ts";
 import {hash, compare} from "../lib/bcrypt.ts"
 import { signJWT } from '../lib/jwt.ts'
-import { isAuthenticathed } from "../utils/isAuthenticathed.ts";
+import { isAuthenticated } from "../utils/isAuthenticated.ts";
 
 export async function userRoutes(server: FastifyInstance) {
 
@@ -74,7 +74,7 @@ export async function userRoutes(server: FastifyInstance) {
         })
     })
 
-    server.get('/me', {preHandler: isAuthenticathed}, async (request, reply) => {
+    server.get('/me', {preHandler: isAuthenticated}, async (request, reply) => {
         const userId = request.userId
         const userName = request.userName
 
