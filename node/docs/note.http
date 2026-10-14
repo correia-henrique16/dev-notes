@@ -1,0 +1,17 @@
+POST http://localhost:3335/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8
+
+{
+    "title" : "Nota 3",
+    "content" : "Esta é a boaaaaa",
+    "tagIds" : [5],
+    "isPublic" : false,
+    "publicPermission": "READONLY"
+}
+
+###
+
+GET http://localhost:3335/notes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzYmM4MjFhLTc2YjctNGU3Ni04MTg2LTg4NjY4NGMxNGJjMiIsInVzZXJOYW1lIjoiSm9hb3ppbiBzZWd1bmRhIGxpbmhhIiwiaWF0IjoxNzkxOTg2MDY1fQ.cNbYfHQ6cXVR2bxGNYl-Equ79oaknPUDnRZJlSVjcLA
