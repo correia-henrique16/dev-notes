@@ -14,4 +14,24 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkL
 
 GET http://localhost:3335/notes
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzYmM4MjFhLTc2YjctNGU3Ni04MTg2LTg4NjY4NGMxNGJjMiIsInVzZXJOYW1lIjoiSm9hb3ppbiBzZWd1bmRhIGxpbmhhIiwiaWF0IjoxNzkxOTg2MDY1fQ.cNbYfHQ6cXVR2bxGNYl-Equ79oaknPUDnRZJlSVjcLA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTg2MTY0fQ.-XGejB3fjv51j40Z5Ekhup0N0JkwqYy0Ag4SaFNGjh0
+
+
+###
+
+PUT http://localhost:3335/notes/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8
+
+{
+    "title" : "Nota 3 editada",
+    "content" : "Esta é a boaaaaa editada",
+    "tagIds" : [5, 1],
+    "isPublic" : true,
+    "publicPermission": "READONLY"
+}
+
+###
+
+DELETE http://localhost:3335/notes/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8

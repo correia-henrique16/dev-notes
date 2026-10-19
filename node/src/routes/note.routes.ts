@@ -56,6 +56,13 @@ export async function noteRoutes(server: FastifyInstance) {
                     {isPublic: true},
                 ]
                 
+            },
+            include: {
+                notesTags: {
+                    include: {
+                        tag: true
+                    }
+                }
             }
         })
 
@@ -105,6 +112,78 @@ export async function noteRoutes(server: FastifyInstance) {
         return reply.code(201)
             .send({
                 note: note
+            })
+    })
+
+    server.put<{Params: {id: string}}>('/notes/:id', async (request, reply) => {
+        const noteId = Number(request.params.id)
+
+        const noteValido = await verificarNota(noteId, request.userId)
+
+        if(!noteValido) {
+            return reply.code(401)
+                .send({
+                    error: 'Nota não existe'
+                })
+        }
+
+        const note = createNoteSchema.parse(request.body)
+
+        const { content, isPublic, publicPermission, tagIds, title } = note
+
+        await prisma.notes.update({
+            where: {
+                id: noteId
+            }, 
+            data: {
+                content,
+                isPublic, 
+                publicPermission, 
+                title,
+
+                notesTags: {
+                    deleteMany: {},
+                    create: tagIds.map((tagId) => ({
+                        tagId
+                    }))
+                }
+            },
+            include: {
+                notesTags: {
+                    include: {
+                        tag: true
+                    }
+                }
+            }
+        })
+
+        return reply.code(200)
+            .send({
+                message: 'Nota editada'
+            })
+    })
+
+    server.delete<{Params: {id: string}}>('/notes/:id', async (request, reply) => {
+        const noteId = Number(request.params.id)
+
+        const noteValida = await verificarNota(noteId, request.userId)
+
+        if(!noteValida) {
+            return reply.code(401)
+                .send({
+                    error: 'Nota não existe'
+                })
+        }
+
+        await prisma.notes.delete({
+            where: {
+                id: noteId
+            }
+        })
+
+        return reply.code(200)
+            .send({
+                message: 'Nota apagada'
             })
     })
 }
