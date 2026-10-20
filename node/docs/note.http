@@ -7,6 +7,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkL
     "content" : "Esta é a boaaaaa",
     "tagIds" : [5],
     "isPublic" : false,
+    "collabs" : [
+        {
+            "userName" : "Joaozin segunda linha",
+            "permission" : "EDITOR"
+        }
+    ],
     "publicPermission": "READONLY"
 }
 
@@ -19,7 +25,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkL
 
 ###
 
-PUT http://localhost:3335/notes/4
+PUT http://localhost:3335/notes/5
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8
 

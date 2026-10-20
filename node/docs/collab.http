@@ -21,12 +21,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImIzYmM4MjFhL
 
 ###
 
-PATCH http://localhost:3335/collabs/2
+PATCH http://localhost:3335/collabs/3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFjODI4N2JkLWMxNjMtNDE0MS1iMGI1LTQ4NzU3YTdjNDQxMCIsInVzZXJOYW1lIjoiSm9hb3ppbjY5IiwiaWF0IjoxNzkxOTgxODA0fQ.SlcZjBL0OzPqJqgO2nWl6Wr1lRR-EjcflGEawhXg4i8
 
 {
-    "permission" : "EDITOR"
+    "permission" : "READONLY"
 }
 
 ###

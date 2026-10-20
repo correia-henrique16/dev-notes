@@ -3,6 +3,30 @@ import { prisma } from '../lib/prisma.ts'
 import { createNoteSchema } from "../schemas/note.schema.ts";
 import { isAuthenticated } from "../utils/isAuthenticated.ts";
 
+const verificarCollabs = async (collabs: { userName: string; permission: any }[], currentUserId: string) => {
+  if (!collabs || collabs.length === 0) return []
+
+  const collabsValidadas = []
+
+  for (const item of collabs) {
+    const user = await prisma.users.findUnique({
+      where: { userName: item.userName },
+      select: { id: true },
+    })
+
+    if (!user || user.id === currentUserId) {
+      return null
+    }
+
+    collabsValidadas.push({
+      collaburator: user.id,
+      permission: item.permission,
+    })
+  }
+
+  return collabsValidadas
+}
+
 const verificarNota = async (noteId: number, userId: string) => {
     if(!noteId) {
         return null
@@ -58,11 +82,8 @@ export async function noteRoutes(server: FastifyInstance) {
                 
             },
             include: {
-                notesTags: {
-                    include: {
-                        tag: true
-                    }
-                }
+                notesTags: { include: { tag: true } },
+                collabs: { include: { user: true } },
             }
         })
 
@@ -73,7 +94,7 @@ export async function noteRoutes(server: FastifyInstance) {
     })
 
     server.post('/notes', async (request, reply) => {
-        const { content, isPublic, publicPermission, tagIds, title } = createNoteSchema.parse(request.body)
+        const { content, isPublic, publicPermission, tagIds, title, collabs } = createNoteSchema.parse(request.body)
         
 
         //VERIFICAR SE O GAJO É O CRIADOR DAS TAGS
@@ -84,6 +105,12 @@ export async function noteRoutes(server: FastifyInstance) {
                 .send({
                     error: 'Possui tags inválidas'
                 })
+        }
+
+        const collabsProntas = await verificarCollabs(collabs, request.userId)
+
+        if (!collabsProntas) {
+            return reply.code(400).send({ error: 'Um ou mais colaboradores são inválidos' })
         }
 
         const note = await prisma.notes.create({
@@ -98,19 +125,20 @@ export async function noteRoutes(server: FastifyInstance) {
                     create: tagIds.map((tagId) => ({
                         tagId
                     }))
-                }
+                },
+
+                // Se collabsProntas tiver elementos, cria-os; caso contrário não faz nada
+                collabs: collabsProntas.length > 0 ? { create: collabsProntas } : undefined,
             },
             include: {
-                notesTags: {
-                    include: {
-                        tag: true
-                    }
-                }
+                notesTags: { include: { tag: true } },
+                collabs: { include: { user: true } },
             }
         })
 
         return reply.code(201)
             .send({
+                message: 'Nota criada!',
                 note: note
             })
     })

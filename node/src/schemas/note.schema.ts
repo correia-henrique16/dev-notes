@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Permission } from '@prisma/client'
+import { permission } from "node:process";
 
 export const createNoteSchema = z.object({
     title: z.string()
@@ -13,6 +14,13 @@ export const createNoteSchema = z.object({
     tagIds: z.array(
         z.number().int().positive('Tag inválida'))
         .default([1]),
+
+    collabs: z.array(
+        z.object({
+            userName: z.string().min(1, 'UserName obrigatório'),
+            permission: z.nativeEnum(Permission).default(Permission.READONLY)
+        })
+    ).default([]),
     
     isPublic: z.boolean().default(false),
 
