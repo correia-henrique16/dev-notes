@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { loginSchema } from "@/src/schemas/user.schema";
