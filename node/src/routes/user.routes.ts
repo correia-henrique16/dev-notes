@@ -32,9 +32,23 @@ export async function userRoutes(server: FastifyInstance) {
             }
         })
 
+        const accessToken = signJWT({
+            id: user.id,
+            userName: user.userName
+        })
+
+        reply.setCookie('token', accessToken, {
+            path: '/', // Define que o cookie é valido para o site inteiro (tudo oq comesse com /)
+            httpOnly: true, // O JavaScript do cliente não consegue ler nem roubar
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 60 * 60 * 24 * 365, // 1 ano inteiro em segundos (60s * 60m * 24h * 365d)
+        })
+
         return reply.code(201)
             .send({
-                id: user.id.toString()
+                message: 'Conta criada com sucesso!',
+                accessToken
             })
     })
 
@@ -68,8 +82,17 @@ export async function userRoutes(server: FastifyInstance) {
             userName: user.userName
         })
 
+        reply.setCookie('token', accessToken, {
+            path: '/', // Define que o cookie é valido para o site inteiro (tudo oq comesse com /)
+            httpOnly: true, // O JavaScript do cliente não consegue ler nem roubar
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 60 * 60 * 24 * 365, // 1 ano inteiro em segundos (60s * 60m * 24h * 365d)
+        })
+
         return reply.code(200)
         .send({
+            message: 'Logado com sucesso',
             accessToken
         })
     })

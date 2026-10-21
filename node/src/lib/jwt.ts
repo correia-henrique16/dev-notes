@@ -22,5 +22,7 @@ export function verifyJWT(token: string) {
 }
 
 export function signJWT(payload: JwtPayload) {
-    return jwt.sign(payload, JWT_SECRET)
+    return jwt.sign(payload, JWT_SECRET, {
+        expiresIn: '365d'
+    })
 }

@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import fastify from "fastify";
+import fastifyCookie from '@fastify/cookie';
 import cors from '@fastify/cors'
 import { userRoutes } from './routes/user.routes.ts';
 import { tagRoutes } from './routes/tag.routes.ts';
@@ -12,7 +13,14 @@ const server = fastify( {
 
 await server.register(cors, {
     origin: true,
+    credentials: true, // Crucial para autorizar envio e receção de cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+})
+
+// Ativa a capacidade de ler e enviar cookies no Fastify
+await server.register(fastifyCookie, {
+    secret: process.env.SECRET_COOKIE,
+    hook: 'onRequest'
 })
 
 await server.register(userRoutes)

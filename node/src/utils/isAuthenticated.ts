@@ -10,14 +10,19 @@ declare module 'fastify' {
 }
 
 export async function isAuthenticated (request: FastifyRequest, reply: FastifyReply) {
-    const rawToken = request.headers?.authorization
+    let accessToken = request.cookies.token
 
-    if (!rawToken || !rawToken.startsWith('Bearer ')) {
-        return reply.status(401).send({ error: 'Token não fornecido ou mal formatado' })
+    if (!accessToken) {
+        const rawToken = request.headers?.authorization
+
+        if (!rawToken || !rawToken.startsWith('Bearer ')) {
+            return reply.status(401).send({ error: 'Token não fornecido ou mal formatado' })
+        }
     }
 
-    const tokenParts = rawToken.split('Bearer ')
-    const accessToken = tokenParts?.[1]
+    if (!accessToken) {
+        return reply.status(401).send({ error: 'Token não fornecido ou mal formatado' })
+    }
 
     const payload = verifyJWT(accessToken) as UserTokenPayload | null
 
