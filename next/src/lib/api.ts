@@ -13,6 +13,7 @@ export async function api(endpoint: string, init?: RequestInit) {
     const response = await fetch(url, {
         ...init,
         headers,
+        credentials: "include" // Essencial para envio e receção de cookies
     })
 
     // Converte a resposta em JSON

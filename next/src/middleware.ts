@@ -1,0 +1,28 @@
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export function middleware(request: NextRequest) {
+  // Lê o cookie 'token' que o Fastify enviou
+  const token = request.cookies.get('token')?.value
+
+  const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
+
+
+  if (!isAuthPage && !token) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+
+  // Se já tiver token e tentar ir para o login/registo -> vai para o dashboard
+  if (isAuthPage && token) {
+    return NextResponse.redirect(new URL('/', request.url))
+  }
+
+  return NextResponse.next()
+}
+
+// barra os ficheiros estaticos, e os restantes vao para a funçao middleware verificar
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
+}

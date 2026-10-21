@@ -123,4 +123,12 @@ export async function userRoutes(server: FastifyInstance) {
                 createdAt: user.createdAt
             })
     })
+
+    server.post('/logout', async (request, reply) => {
+        reply.clearCookie('token', {
+            path: '/',
+        })
+
+        return reply.send({ message: 'Logout efetuado com sucesso' })
+    })
 }
