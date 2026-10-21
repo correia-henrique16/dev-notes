@@ -64,7 +64,7 @@ export async function userRoutes(server: FastifyInstance) {
         if (!user) {
             return reply.code(401)
                 .send({
-                    message : 'Password incorreta'
+                    error : 'Password incorreta'
                 })
         }
 
@@ -73,7 +73,7 @@ export async function userRoutes(server: FastifyInstance) {
         if(!isValidPassword) {
             return reply.code(401)
                 .send({
-                    message : 'Password incorreta'
+                    error : 'Password incorreta'
                 })
         }
 
@@ -124,7 +124,7 @@ export async function userRoutes(server: FastifyInstance) {
             })
     })
 
-    server.post('/logout', async (request, reply) => {
+    server.post('/logout', {preHandler: isAuthenticated}, async (request, reply) => {
         reply.clearCookie('token', {
             path: '/',
         })
