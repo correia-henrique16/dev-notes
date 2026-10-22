@@ -8,23 +8,16 @@ export async function DashboardContent() {
     const notes = await getNotes()
 
     return (
-        <>
-        <h1 className="text-3xl font-bold text-lighter mb-6">
-            As tuas Dev Notes - {user?.name}
-        </h1>
+    <div className="w-full h-full bg-mid flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-lighter mb-8 text-center">
+        As tuas Dev Notes - {user?.userName || user?.name}
+      </h1>
 
-        {console.log(notes)}
-        {tags.map((tag) => (
-
-            <div key={tag.id}>
-                <p>user {tag.name}</p>
-                <p>color {tag.color}</p>
-                <p>id {tag.id}</p>
-            </div>
-
-        ))}
-
-        <DashboardView user={user} initialTags={tags} initialNotes={notes} />
-        </>
-    )
+      <DashboardView 
+        user={user} 
+        initialTags={tags} 
+        initialNotes={notes} 
+      />
+    </div>
+  )
 }
