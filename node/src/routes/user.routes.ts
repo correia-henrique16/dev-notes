@@ -34,7 +34,8 @@ export async function userRoutes(server: FastifyInstance) {
 
         const accessToken = signJWT({
             id: user.id,
-            userName: user.userName
+            userName: user.userName,
+            name: user.name
         })
 
         reply.setCookie('token', accessToken, {
@@ -79,7 +80,8 @@ export async function userRoutes(server: FastifyInstance) {
 
         const accessToken = signJWT({
             id: user.id,
-            userName: user.userName
+            userName: user.userName,
+            name: user.name
         })
 
         reply.setCookie('token', accessToken, {
