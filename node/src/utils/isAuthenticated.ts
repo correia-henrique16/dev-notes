@@ -5,19 +5,24 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 declare module 'fastify' {
   interface FastifyRequest {
     userId: string
-    userName: string
+    userName: string,
+    name: string
   }
 }
 
-export async function isAuthenticated (request: FastifyRequest, reply: FastifyReply) {
+export async function isAuthenticated(request: FastifyRequest, reply: FastifyReply) {
     let accessToken = request.cookies.token
 
+    // Se não veio por cookie, tenta ler do header Authorization
     if (!accessToken) {
         const rawToken = request.headers?.authorization
 
         if (!rawToken || !rawToken.startsWith('Bearer ')) {
-            return reply.status(401).send({ error: 'Token não fornecido ou mal formatado' })
+        return reply.status(401).send({ error: 'Token não fornecido ou mal formatado' })
         }
+
+        // Extrai a string do token a seguir a "Bearer "
+        accessToken = rawToken.split(' ')[1]
     }
 
     if (!accessToken) {
@@ -27,15 +32,12 @@ export async function isAuthenticated (request: FastifyRequest, reply: FastifyRe
     const payload = verifyJWT(accessToken) as UserTokenPayload | null
 
     if (!payload) {
-        return reply.code(401)
-            .send({
-                error: 'Invalid Token'
-            })
+        return reply.status(401).send({ error: 'Invalid Token' })
     }
 
-    const {id, userName} = payload
+    const { id, userName, name } = payload
 
     request.userId = id
     request.userName = userName
-
+    request.name = name
 }

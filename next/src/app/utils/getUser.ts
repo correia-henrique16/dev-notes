@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 
-interface UserTokenPayload {
+export interface UserTokenPayload {
   id: string
   userName: string,
   name: string
