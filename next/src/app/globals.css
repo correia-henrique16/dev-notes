@@ -10,16 +10,24 @@
 
 }
 
-@utility centered {
-  @apply flex w-full justify-center h-screen
-}
-
 @utility authInput {
   @apply w-full p-3 rounded-xl font-medium bg-white 
 }
 
 @utility authBtn {
   @apply w-1/2 py-3.5 bg-lighter text-darker font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50
+}
+
+@utility auth-card {
+  @apply w-full max-w-md flex flex-col items-center gap-4 bg-lighter p-8 rounded-2xl shadow-xl;
+}
+
+@utility auth-link {
+  @apply font-semibold text-darker underline hover:opacity-75 transition-opacity cursor-pointer;
+}
+
+@utility auth-title {
+  @apply text-2xl font-bold text-darker tracking-tight;
 }
 
 @theme inline {

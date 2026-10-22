@@ -45,6 +45,8 @@ export default function LoginForm() {
              className="authBtn">
                 {loading ? 'A carregar...' : 'Entrar'}
             </button>
+
+
         </form>
     )
 }

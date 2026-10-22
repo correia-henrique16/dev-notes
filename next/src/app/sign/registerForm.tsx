@@ -68,6 +68,7 @@ export default function RegisterForm() {
              className="authBtn">
                 {loading ? 'A carregar...' : 'Registar'}
             </button>
+
         </form>
     )
 }

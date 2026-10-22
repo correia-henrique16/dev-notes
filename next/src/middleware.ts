@@ -5,11 +5,11 @@ export function middleware(request: NextRequest) {
   // Lê o cookie 'token' que o Fastify enviou
   const token = request.cookies.get('token')?.value
 
-  const isAuthPage = request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register')
+  const isAuthPage = request.nextUrl.pathname.startsWith('/sign')
 
 
   if (!isAuthPage && !token) {
-    return NextResponse.redirect(new URL('/login', request.url))
+    return NextResponse.redirect(new URL('/sign', request.url))
   }
 
   // Se já tiver token e tentar ir para o login/registo -> vai para o dashboard
