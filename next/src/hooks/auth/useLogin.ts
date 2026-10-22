@@ -46,7 +46,7 @@ export function useLogin() {
                 body: JSON.stringify(validacao.data)
             })
 
-            router.push('/')
+            router.push('/dashboard')
 
         } catch (err: unknown) {
             // 1. Servidor desligado / sem rede (TypeError do fetch)
