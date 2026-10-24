@@ -6,10 +6,10 @@ import { UserTokenPayload } from "../../utils/getUser"
 import { useTags } from "../../hooks/dashboard/useTags"
 import { useNotes } from "../../hooks/dashboard/useNotes"
 import TagsComponent from "./tags/Tags"
-import NoteComponent from "./Note"
+import NoteComponent from "./notes/Note"
 import JanelasComponent from "./Janelas"
 import NewTag from "./tags/NewTag"
-import { useState } from "react"
+import NewNote from "./notes/NewNote"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -19,8 +19,10 @@ interface DashboardViewProps {
 
 export function DashboardView({ initialNotes, initialTags }: DashboardViewProps) {
   const tagsHooks = useTags(initialTags)
-  const { notes, setNotes } = useNotes(initialNotes)
-  
+  const notesHooks = useNotes(initialNotes)
+
+  const { tags, setShowNewTag, showNewTag } = tagsHooks
+  const { notes, showNewNote, setShowNewNote } = notesHooks
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -32,7 +34,7 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
         
         {/* Barra de Ações Alinhada à Direita */}
         <div className="flex items-center justify-end px-3">
-          <TagsComponent tags={tagsHooks.tags} setShowNewTag={tagsHooks.setShowNewTag}/>
+          <TagsComponent tags={tags} setShowNewTag={setShowNewTag}/>
         </div>
 
         {/* 3. Grelha de Notas */}
@@ -47,9 +49,14 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
           ))}
         </div>
 
+        <button onClick={() => setShowNewNote(true)}>
+          +
+        </button>
+
       </div>
 
-      {tagsHooks.showNewTag && <NewTag setShowNewTag={tagsHooks.setShowNewTag} tagsHook={tagsHooks} />}
+      {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
+      {showNewNote && <NewNote setShowNewNote={setShowNewNote} notesHook={notesHooks} tags={tags} />}
       
     </div>
   )

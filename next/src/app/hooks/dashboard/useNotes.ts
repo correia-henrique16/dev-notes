@@ -1,24 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginSchema } from "@/src/schemas/user.schema";
+import { createNoteSchema } from "@/src/schemas/note.schema";
 import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
 
 interface FormErrors {
-  userName?: { _errors?: string[] }
-  password?: { _errors?: string[] }
+  title?: { _errors?: string[] }
+  content?: { _errors?: string[] }
+  tagIds?: { _errors?: string[] }
+  isPublic?: { _errors?: string[] }
+  publicPermission?: { _errors?: string[] }
+  collabs?: { _errors?: string[] }
 }
 
 export function useNotes(initialNotes: Note[]) {
     const router = useRouter()
 
     const [formData, setFormData] = useState({
-        userName: '',
-        password: ''
+        title: '',
+        content: '',
+        tagIds: '',
+        isPublic: '',
+        publicPermission: '',
+        collabs: '',
     })
 
     const [notes, setNotes] = useState<Note[]>(initialNotes)
+    const [showNewNote, setShowNewNote] = useState<boolean>(false)
 
     const [errors, setErrors] = useState<FormErrors>({})
     const [serverError, setServerError] = useState('')
@@ -32,10 +41,12 @@ export function useNotes(initialNotes: Note[]) {
 
         //Captura todos os dados do formulário automaticamente
         const formData = new FormData(e.currentTarget)
-        const data = Object.fromEntries(formData.entries())
-
+        const data ={
+            ... Object.fromEntries(formData.entries()),
+            tagIds: formData.getAll('tagIds').map(Number)
+        } 
         
-        const validacao = loginSchema.safeParse(data)
+        const validacao = createNoteSchema.safeParse(data)
 
         if (!validacao.success) {
             setErrors(validacao.error.format());
@@ -44,12 +55,16 @@ export function useNotes(initialNotes: Note[]) {
         }
 
         try {
-            await api('/auth', {
+            const response = await api('/notes', {
                 method: 'POST',
                 body: JSON.stringify(validacao.data)
-            })
+            }) as {note: Note}
 
-            router.push('/dashboard')
+            const newNote = response.note
+            
+            setNotes([...notes, newNote])
+            setShowNewNote(false)
+            return true
 
         } catch (err: unknown) {
             // 1. Servidor desligado / sem rede (TypeError do fetch)
@@ -65,7 +80,7 @@ export function useNotes(initialNotes: Note[]) {
             if (message) {
                 setServerError(message)
             } else {
-                setServerError('Ocorreu um erro inesperado ao logar')
+                setServerError('Ocorreu um erro inesperado ao criar a nota')
             }
         } finally {
             setLoading(false)
@@ -73,7 +88,7 @@ export function useNotes(initialNotes: Note[]) {
     }
 
     return {
-        notes, setNotes,
+        notes, setNotes, showNewNote, setShowNewNote,
         formData,
         errors,
         loading,

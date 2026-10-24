@@ -1,6 +1,9 @@
 import { z } from "zod";
-import { Permission } from '@prisma/client'
-import { permission } from "node:process";
+
+enum Permission {
+  READONLY = 'READONLY',
+  EDITOR = 'EDITOR'
+}
 
 export const createNoteSchema = z.object({
     title: z.string()

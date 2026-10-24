@@ -72,7 +72,7 @@ export function useTags(initialTags: Tag[]) {
             if (message) {
                 setServerError(message)
             } else {
-                setServerError('Ocorreu um erro inesperado ao logar')
+                setServerError('Ocorreu um erro inesperado ao criar a tag')
             }
         } finally {
             setLoading(false)

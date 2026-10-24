@@ -10,7 +10,7 @@ export async function DashboardContent() {
     return (
     <div className="w-full h-full bg-mid flex flex-col items-center">
       <h1 className="text-3xl font-bold text-lighter mb-8 text-center">
-        As tuas Dev Notes - {user?.userName || user?.name}
+        As tuas Dev Notes - {user?.name}
       </h1>
 
       <DashboardView 
