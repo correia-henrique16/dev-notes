@@ -3,11 +3,13 @@
 import { Note } from "@/src/schemas/types/note"
 import { Tag } from "@/src/schemas/types/tag"
 import { UserTokenPayload } from "../../utils/getUser"
-import { useTags } from "../../hooks/dashboard/tags"
-import { useNotes } from "../../hooks/dashboard/notes"
-import TagsComponent from "./Tags"
+import { useTags } from "../../hooks/dashboard/useTags"
+import { useNotes } from "../../hooks/dashboard/useNotes"
+import TagsComponent from "./tags/Tags"
 import NoteComponent from "./Note"
 import JanelasComponent from "./Janelas"
+import NewTag from "./tags/NewTag"
+import { useState } from "react"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -16,8 +18,9 @@ interface DashboardViewProps {
 }
 
 export function DashboardView({ initialNotes, initialTags }: DashboardViewProps) {
-  const { tags, setTags } = useTags(initialTags)
+  const tagsHooks = useTags(initialTags)
   const { notes, setNotes } = useNotes(initialNotes)
+  
 
   return (
     <div className="w-full h-full flex flex-col">
@@ -29,10 +32,10 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
         
         {/* Barra de Ações Alinhada à Direita */}
         <div className="flex items-center justify-end px-3">
-          <TagsComponent tags={tags}/>
+          <TagsComponent tags={tagsHooks.tags} setShowNewTag={tagsHooks.setShowNewTag}/>
         </div>
 
-        {/* 3. Grelha de Notas Moderna */}
+        {/* 3. Grelha de Notas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
           {notes.map((note) => (
             <div
@@ -45,6 +48,9 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
         </div>
 
       </div>
+
+      {tagsHooks.showNewTag && <NewTag setShowNewTag={tagsHooks.setShowNewTag} tagsHook={tagsHooks} />}
+      
     </div>
   )
 }
