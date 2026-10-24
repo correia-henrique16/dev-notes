@@ -2,7 +2,7 @@
 
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
-import { useChangeAuth } from "@/src/hooks/auth/useChangeAuth";
+import { useChangeAuth } from "@/src/app/hooks/auth/useChangeAuth";
 
 export default function ChangeAuthPage() {
   const { showRegister, setShowRegister } = useChangeAuth();

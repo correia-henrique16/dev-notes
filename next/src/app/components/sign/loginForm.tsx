@@ -1,6 +1,6 @@
 'use client'
 
-import { useLogin } from "@/src/hooks/auth/useLogin"
+import { useLogin } from "@/src/app/hooks/auth/useLogin"
 
 export default function LoginForm() {
     const {errors, loading, serverError, handleSubmit } = useLogin()

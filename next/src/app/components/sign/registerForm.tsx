@@ -1,6 +1,6 @@
 'use client'
 
-import { useRegister } from "@/src/hooks/auth/useRegister"
+import { useRegister } from "@/src/app/hooks/auth/useRegister"
 
 export default function RegisterForm() {
     const {errors, loading, serverError, handleSubmit } = useRegister()
