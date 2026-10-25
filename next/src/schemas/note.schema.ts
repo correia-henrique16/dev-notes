@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-enum Permission {
+export enum Permission {
   READONLY = 'READONLY',
   EDITOR = 'EDITOR'
 }

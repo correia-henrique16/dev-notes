@@ -29,6 +29,8 @@ export function useNotes(initialNotes: Note[]) {
     const [notes, setNotes] = useState<Note[]>(initialNotes)
     const [showNewNote, setShowNewNote] = useState<boolean>(false)
 
+    const [showPublicPerm, setShowPublicPerm] = useState<boolean>(false)
+
     const [errors, setErrors] = useState<FormErrors>({})
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
@@ -41,9 +43,14 @@ export function useNotes(initialNotes: Note[]) {
 
         //Captura todos os dados do formulário automaticamente
         const formData = new FormData(e.currentTarget)
+
+        const isPublic = formData.get('isPublic') === 'true' //o isPublic fica true se vier isso na string, senao fica false
+        const rawTags = formData.getAll('tagIds').map(Number)
+
         const data ={
             ... Object.fromEntries(formData.entries()),
-            tagIds: formData.getAll('tagIds').map(Number)
+            isPublic,
+            tagIds: rawTags.length > 0 ? rawTags : undefined //para o zod do backend ler q veio undefined e atribuir o defaultValue
         } 
         
         const validacao = createNoteSchema.safeParse(data)
@@ -64,6 +71,7 @@ export function useNotes(initialNotes: Note[]) {
             
             setNotes([...notes, newNote])
             setShowNewNote(false)
+            setShowPublicPerm(false)
             return true
 
         } catch (err: unknown) {
@@ -89,6 +97,7 @@ export function useNotes(initialNotes: Note[]) {
 
     return {
         notes, setNotes, showNewNote, setShowNewNote,
+        showPublicPerm, setShowPublicPerm,
         formData,
         errors,
         loading,

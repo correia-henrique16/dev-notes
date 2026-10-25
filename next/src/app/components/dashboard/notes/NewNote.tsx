@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { useNotes } from "@/src/app/hooks/dashboard/useNotes"
 import { Tag } from "@/src/schemas/types/tag"
+import { Permission } from "@/src/schemas/note.schema"
 
 interface NewNoteProps {
     setShowNewNote: Dispatch<SetStateAction<boolean>>,
@@ -11,7 +12,7 @@ interface NewNoteProps {
 
 export default function NewNote({setShowNewNote, notesHook, tags} : NewNoteProps) {
     
-        const {errors, loading, serverError, handleSubmit } = notesHook
+        const {errors, loading, serverError, handleSubmit, setShowPublicPerm, showPublicPerm } = notesHook
     
         const listaErros = [
             ...(errors?.title?._errors || []),
@@ -53,6 +54,28 @@ export default function NewNote({setShowNewNote, notesHook, tags} : NewNoteProps
                             </label>
                         ))}
                     </div>
+
+                    <div className="flex flex-col gap-1 w-full">
+                        <label htmlFor="privacidade-select">Privacidade</label>
+
+                        <select name="isPublic" id="privacidade-select" defaultValue="false"
+                         onChange={(e) => setShowPublicPerm(e.target.value === 'true')}>
+                            <option value="false">Private</option>
+                            <option value="true">Public</option>
+                        </select>
+                    </div>
+                    
+                    {showPublicPerm && 
+                        <div className="flex flex-col gap-1 w-full">
+                            <label htmlFor="public-perm-select">showw</label>
+
+                            <select name="publicPermission" id="public-perm-select" defaultValue={Permission.READONLY}>
+                                <option value={Permission.READONLY}>Leitor</option>
+                                <option value={Permission.EDITOR}>Editor</option>
+                            </select>
+                        </div>
+                    }
+                    
         
                     <div> 
                         {listaErros.length > 0 && (
