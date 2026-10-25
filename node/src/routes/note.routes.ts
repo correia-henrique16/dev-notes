@@ -76,10 +76,47 @@ export async function noteRoutes(server: FastifyInstance) {
         const notes = await prisma.notes.findMany({
             where: {
                 OR: [
-                    {ownerId: request.userId},
-                    {isPublic: true},
+                    {ownerId: request.userId}
                 ]
                 
+            },
+            include: {
+                notesTags: { include: { tag: true } },
+                collabs: { include: { user: true } },
+            }
+        })
+
+        return reply.code(200)
+            .send({
+                notes
+            })
+    })
+
+    server.get('/notes/public', async (request, reply) => {
+        const notes = await prisma.notes.findMany({
+            where: {
+                isPublic: true, 
+            },
+            include: {
+                notesTags: { include: { tag: true } },
+                collabs: { include: { user: true } },
+            }
+        })
+
+        return reply.code(200)
+            .send({
+                notes
+            })
+    })
+
+    server.get('/notes/collabs', async (request, reply) => {
+        const notes = await prisma.notes.findMany({
+            where: {
+                collabs: {
+                    some: {
+                        collaburator: request.userId
+                    }
+                }, 
             },
             include: {
                 notesTags: { include: { tag: true } },
