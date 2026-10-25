@@ -26,6 +26,7 @@ export function useNotes(initialNotes: Note[]) {
         collabs: '',
     })
 
+    const [showNotes, setShowNotes] = useState<boolean>(false)
     const [notes, setNotes] = useState<Note[]>(initialNotes)
     const [showNewNote, setShowNewNote] = useState<boolean>(false)
 
@@ -98,6 +99,7 @@ export function useNotes(initialNotes: Note[]) {
     return {
         notes, setNotes, showNewNote, setShowNewNote,
         showPublicPerm, setShowPublicPerm,
+        showNotes, setShowNotes,
         formData,
         errors,
         loading,

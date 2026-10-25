@@ -1,11 +1,11 @@
 import { getUser } from "../../utils/getUser"
-import { getNotes, getTags } from "../../utils/getBD"
+import { getNotesUser, getTags } from "../../utils/getBD"
 import { DashboardView } from "./DashboardView"
 
 export async function DashboardContent() {
     const user = await getUser()
     const tags = await getTags()
-    const notes = await getNotes()
+    const notes = await getNotesUser()
 
     return (
     <div className="w-full h-full bg-mid flex flex-col items-center">

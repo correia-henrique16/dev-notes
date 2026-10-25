@@ -14,9 +14,33 @@ export async function getTags(): Promise<Tag[]> {
     }
 }
 
-export async function getNotes(): Promise<Note[]> {
+export async function getNotesUser(): Promise<Note[]> {
     try {
         const data = await api('/notes')
+
+        return data?.notes || []
+    } catch(err: unknown){
+
+        console.error('Erro ao obter notes:', err);
+        return [];
+    }
+}
+
+export async function getNotesPublic(): Promise<Note[]> {
+    try {
+        const data = await api('/notes/public')
+
+        return data?.notes || []
+    } catch(err: unknown){
+
+        console.error('Erro ao obter notes:', err);
+        return [];
+    }
+}
+
+export async function getNotesCollab(): Promise<Note[]> {
+    try {
+        const data = await api('/notes/collabs')
 
         return data?.notes || []
     } catch(err: unknown){

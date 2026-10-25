@@ -5,6 +5,7 @@ import { Tag } from "@/src/schemas/types/tag"
 import { UserTokenPayload } from "../../utils/getUser"
 import { useTags } from "../../hooks/dashboard/useTags"
 import { useNotes } from "../../hooks/dashboard/useNotes"
+import { useNotesPublic } from "../../hooks/dashboard/useNotesPublic"
 import TagsComponent from "./tags/Tags"
 import NoteComponent from "./notes/Note"
 import JanelasComponent from "./Janelas"
@@ -20,14 +21,22 @@ interface DashboardViewProps {
 export function DashboardView({ initialNotes, initialTags }: DashboardViewProps) {
   const tagsHooks = useTags(initialTags)
   const notesHooks = useNotes(initialNotes)
+  const notesPublicHooks = useNotesPublic()
 
   const { tags, setShowNewTag, showNewTag } = tagsHooks
-  const { notes, showNewNote, setShowNewNote } = notesHooks
+  const { notes, showNewNote, setShowNewNote, showNotes } = notesHooks
+  const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
+
+  let selectedNotes: Note[] = notes
+
+  if (showNotes) selectedNotes = notes
+  if (showPublicNotes) selectedNotes = notesPublic
+
 
   return (
     <div className="w-full h-full flex flex-col">
 
-      <JanelasComponent />
+      <JanelasComponent notesPublicHooks={notesPublicHooks} notesHooks={notesHooks}/>
 
       {/* 2. Contentor Principal */}
       <div className="w-full border-t border-zinc-700/80 pt-5 flex flex-col gap-6">
@@ -37,17 +46,21 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
           <TagsComponent tags={tags} setShowNewTag={setShowNewTag}/>
         </div>
 
-        {/* 3. Grelha de Notas */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
-          {notes.map((note) => (
-            <div
-              key={note.id}
-              className="group flex flex-col border border-zinc-800 hover:border-zinc-700/80 bg-zinc-900/40 hover:bg-zinc-900/70 rounded-xl overflow-hidden min-h-36 transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md cursor-pointer"
-            >
-              <NoteComponent note={note}/>
-            </div>
-          ))}
-        </div>
+        {loadingPublic ? 
+          <p>Loadinggg</p>
+        :
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
+            {selectedNotes.map((note) => (
+              <div
+                key={note.id}
+                className="group flex flex-col border border-zinc-800 hover:border-zinc-700/80 bg-zinc-900/40 hover:bg-zinc-900/70 rounded-xl overflow-hidden min-h-36 transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md cursor-pointer"
+              >
+                <NoteComponent note={note}/>
+              </div>
+            ))}
+          </div>
+        }
+        
 
         <button onClick={() => setShowNewNote(true)}>
           +
