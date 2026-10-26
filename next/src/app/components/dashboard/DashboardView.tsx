@@ -6,6 +6,7 @@ import { UserTokenPayload } from "../../utils/getUser"
 import { useTags } from "../../hooks/dashboard/useTags"
 import { useNotes } from "../../hooks/dashboard/useNotes"
 import { useNotesPublic } from "../../hooks/dashboard/useNotesPublic"
+import { useNotesCollab } from "../../hooks/dashboard/useNotesCollab"
 import TagsComponent from "./tags/Tags"
 import NoteComponent from "./notes/Note"
 import JanelasComponent from "./Janelas"
@@ -22,21 +23,24 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
   const tagsHooks = useTags(initialTags)
   const notesHooks = useNotes(initialNotes)
   const notesPublicHooks = useNotesPublic()
+  const notesCollabHooks = useNotesCollab()
 
   const { tags, setShowNewTag, showNewTag } = tagsHooks
   const { notes, showNewNote, setShowNewNote, showNotes } = notesHooks
   const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
+  const { notesCollab, loadingCollab, showCollabNotes } = notesCollabHooks
 
   let selectedNotes: Note[] = notes
 
   if (showNotes) selectedNotes = notes
   if (showPublicNotes) selectedNotes = notesPublic
+  if (showCollabNotes) selectedNotes = notesCollab
 
 
   return (
     <div className="w-full h-full flex flex-col">
 
-      <JanelasComponent notesPublicHooks={notesPublicHooks} notesHooks={notesHooks}/>
+      <JanelasComponent notesPublicHooks={notesPublicHooks} notesHooks={notesHooks} notesCollabHooks={notesCollabHooks}/>
 
       {/* 2. Contentor Principal */}
       <div className="w-full border-t border-zinc-700/80 pt-5 flex flex-col gap-6">
@@ -46,7 +50,7 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
           <TagsComponent tags={tags} setShowNewTag={setShowNewTag}/>
         </div>
 
-        {loadingPublic ? 
+        {loadingPublic || loadingCollab ? 
           <p>Loadinggg</p>
         :
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
