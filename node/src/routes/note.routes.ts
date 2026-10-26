@@ -38,7 +38,9 @@ const verificarNota = async (noteId: number, userId: string) => {
         }
     })
 
-    if (!note?.ownerId || note.ownerId != userId) {
+    if (!note) return null
+
+    if (!note.ownerId || note.ownerId != userId) {
         return null
     }
 
@@ -65,6 +67,43 @@ const verificarTags = async (tagIds: number[], userId: string) => {
     }
 
     return tagsValidas
+}
+
+const verificarEditarNota = async (noteId: number, userId: string) => {
+    if(!noteId) {
+        return null
+    }
+
+    const note = await prisma.notes.findUnique({
+        where: {
+            id: noteId
+        }
+    })
+
+    if (!note) return null
+
+    //Verificar se o user é o owner, se for devolve logo certo
+    const isOwner = note?.ownerId == userId 
+    if (isOwner) return true
+
+    //Verificar se a nota é publica, e se o publicPermission é EDITOR, se for devolve logo certo
+    const isPublicEditor = note?.isPublic && note.publicPermission == 'EDITOR'
+    if (isPublicEditor) return true
+    
+    //Verificar se o user é colaborador e com permissao e EDITOR, se for devolve logo certo
+    const isCollaborator = await prisma.collabs.findFirst({
+        where: {
+            AND: [
+                {noteId},
+                {collaburator: userId},
+                {permission: "EDITOR"}
+            ]
+        }
+    })
+    if (isCollaborator) return true
+
+    //se n passar em nenhum, return null
+    return null
 }
 
 export async function noteRoutes(server: FastifyInstance) {
@@ -183,9 +222,9 @@ export async function noteRoutes(server: FastifyInstance) {
     server.put<{Params: {id: string}}>('/notes/:id', async (request, reply) => {
         const noteId = Number(request.params.id)
 
-        const noteValido = await verificarNota(noteId, request.userId)
+        const editValido = await verificarEditarNota(noteId, request.userId)
 
-        if(!noteValido) {
+        if(!editValido) {
             return reply.code(401)
                 .send({
                     error: 'Nota não existe'
