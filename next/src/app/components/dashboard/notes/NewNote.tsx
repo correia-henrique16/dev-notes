@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import { useNotes } from "@/src/app/hooks/dashboard/useNotes"
+import { useNotes } from "@/src/app/hooks/dashboard/notes/useNotes"
 import { Tag } from "@/src/schemas/types/tag"
 import { Permission } from "@/src/schemas/note.schema"
 

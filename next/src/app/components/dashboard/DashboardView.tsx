@@ -4,12 +4,13 @@ import { Note } from "@/src/schemas/types/note"
 import { Tag } from "@/src/schemas/types/tag"
 import { UserTokenPayload } from "../../utils/getUser"
 import { useTags } from "../../hooks/dashboard/useTags"
-import { useNotes } from "../../hooks/dashboard/useNotes"
-import { useNotesPublic } from "../../hooks/dashboard/useNotesPublic"
-import { useNotesCollab } from "../../hooks/dashboard/useNotesCollab"
+import { useNotes } from "../../hooks/dashboard/notes/useNotes"
+import { useNotesPublic } from "../../hooks/dashboard/notes/useNotesPublic"
+import { useNotesCollab } from "../../hooks/dashboard/notes/useNotesCollab"
 import TagsComponent from "./tags/Tags"
 import NoteComponent from "./notes/Note"
 import JanelasComponent from "./Janelas"
+import OpenNoteComponent from "./notes/OpenNote"
 import NewTag from "./tags/NewTag"
 import NewNote from "./notes/NewNote"
 
@@ -26,7 +27,7 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
   const notesCollabHooks = useNotesCollab()
 
   const { tags, setShowNewTag, showNewTag } = tagsHooks
-  const { notes, showNewNote, setShowNewNote, showNotes } = notesHooks
+  const { notes, showNewNote, setShowNewNote, showNotes, setOpenNote, openNote } = notesHooks
   const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
   const { notesCollab, loadingCollab, showCollabNotes } = notesCollabHooks
 
@@ -42,8 +43,8 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
 
       <JanelasComponent notesPublicHooks={notesPublicHooks} notesHooks={notesHooks} notesCollabHooks={notesCollabHooks}/>
 
-      {/* 2. Contentor Principal */}
-      <div className="w-full border-t border-zinc-700/80 pt-5 flex flex-col gap-6">
+      {/* Contentor Principal */}
+      <section className="w-full border-t border-zinc-700/80 pt-5 flex flex-col gap-6">
         
         {/* Barra de Ações Alinhada à Direita */}
         <div className="flex items-center justify-end px-3">
@@ -55,22 +56,23 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
         :
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
             {selectedNotes.map((note) => (
-              <div
-                key={note.id}
-                className="group flex flex-col border border-zinc-800 hover:border-zinc-700/80 bg-zinc-900/40 hover:bg-zinc-900/70 rounded-xl overflow-hidden min-h-36 transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-md cursor-pointer"
+              <button
+                key={note.id} onClick={() => setOpenNote(note)}
               >
                 <NoteComponent note={note}/>
-              </div>
+              </button>
             ))}
           </div>
         }
+
+        {openNote && <OpenNoteComponent notesHook={notesHooks} tags={tags}/>}
         
 
         <button onClick={() => setShowNewNote(true)}>
           +
         </button>
 
-      </div>
+      </section>
 
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
       {showNewNote && <NewNote setShowNewNote={setShowNewNote} notesHook={notesHooks} tags={tags} />}

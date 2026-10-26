@@ -1,6 +1,6 @@
-import { useNotesPublic } from "../../hooks/dashboard/useNotesPublic"
-import { useNotesCollab } from "../../hooks/dashboard/useNotesCollab"
-import { useNotes } from "../../hooks/dashboard/useNotes"
+import { useNotesPublic } from "../../hooks/dashboard/notes/useNotesPublic"
+import { useNotesCollab } from "../../hooks/dashboard/notes/useNotesCollab"
+import { useNotes } from "../../hooks/dashboard/notes/useNotes"
 
 interface JanelasProps {
     notesPublicHooks: ReturnType<typeof useNotesPublic>

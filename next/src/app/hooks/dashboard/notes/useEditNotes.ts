@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { createNoteSchema } from "@/src/schemas/note.schema";
 import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
+import { Dispatch, SetStateAction } from "react";
 
 interface FormErrors {
   title?: { _errors?: string[] }
@@ -14,23 +14,27 @@ interface FormErrors {
   collabs?: { _errors?: string[] }
 }
 
-export function useNotes(initialNotes: Note[]) {
-    const router = useRouter()
+interface EditNoteProps {
+    note: Note | null,
+    setOpenNote: Dispatch<SetStateAction<Note | null>>
+}
+
+export function useEditNotes({note, setOpenNote}: EditNoteProps) {
+
+    const initialTagIds = note?.notesTags.map(noteTag => noteTag.tagId)
 
     const [formData, setFormData] = useState({
-        title: '',
-        content: '',
-        tagIds: '',
-        isPublic: '',
-        publicPermission: '',
-        collabs: '',
-    })
+        title: note?.title,
+        content: note?.content,
+        tagIds: initialTagIds,
+        isPublic: note?.isPublic,
+        publicPermission: note?.publicPermission,
+        collabs: note?.collabs,
+    }) 
 
-    const [showNotes, setShowNotes] = useState<boolean>(false)
-    const [notes, setNotes] = useState<Note[]>(initialNotes)
-    const [showNewNote, setShowNewNote] = useState<boolean>(false)
+    
 
-    const [showPublicPerm, setShowPublicPerm] = useState<boolean>(false)
+    const [showPublicPerm, setShowPublicPerm] = useState<boolean | undefined>(note?.isPublic)
 
     const [errors, setErrors] = useState<FormErrors>({})
     const [serverError, setServerError] = useState('')
@@ -63,16 +67,14 @@ export function useNotes(initialNotes: Note[]) {
         }
 
         try {
-            const response = await api('/notes', {
-                method: 'POST',
+            await api(`/notes/${note?.id}`, {
+                method: 'PUT',
                 body: JSON.stringify(validacao.data)
-            }) as {note: Note}
+            })
 
-            const newNote = response.note
             
-            setNotes([...notes, newNote])
-            setShowNewNote(false)
             setShowPublicPerm(false)
+            setOpenNote(null)
             return true
 
         } catch (err: unknown) {
@@ -97,9 +99,7 @@ export function useNotes(initialNotes: Note[]) {
     }
 
     return {
-        notes, setNotes, showNewNote, setShowNewNote,
         showPublicPerm, setShowPublicPerm,
-        showNotes, setShowNotes,
         formData,
         errors,
         loading,

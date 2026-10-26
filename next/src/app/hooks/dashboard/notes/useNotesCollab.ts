@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNotesCollab } from "../../utils/getBD";
+import { getNotesCollab } from "../../../utils/getBD";
 import { Note } from "@/src/schemas/types/note";
 
 export function useNotesCollab() {

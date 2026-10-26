@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNotesPublic } from "../../utils/getBD";
+import { getNotesPublic } from "../../../utils/getBD";
 import { Note } from "@/src/schemas/types/note";
 
 export function useNotesPublic() {
