@@ -8,10 +8,11 @@ import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
 
 interface EditNoteProps {
     note: Note | null,
-    setOpenNote: Dispatch<SetStateAction<Note | null>>
+    setOpenNote: Dispatch<SetStateAction<Note | null>>,
+    setNotes: Dispatch<SetStateAction<Note[]>>
 }
 
-export function useEditNotes({note, setOpenNote}: EditNoteProps) {
+export function useEditNotes({note, setOpenNote, setNotes}: EditNoteProps) {
 
     const initialTagIds = note?.notesTags.map(noteTag => noteTag.tagId)
 
@@ -58,11 +59,20 @@ export function useEditNotes({note, setOpenNote}: EditNoteProps) {
         }
 
         try {
-            await api(`/notes/${note?.id}`, {
+            const response = await api(`/notes/${note?.id}`, {
                 method: 'PUT',
                 body: JSON.stringify(validacao.data)
-            })
+            }) as {note: Note; noteId: number}
 
+            const updatedNote = {
+                ...response.note,
+                id: response.noteId
+            }
+
+            setNotes(prevNotes => {
+                const updated = prevNotes.map(n => (Number(n.id) === Number(updatedNote.id) ? updatedNote : n)) //percorre as notas, e troca aq tem o id igual pela atualizada
+                return updated
+            })
             
             setShowPublicPerm(false)
             setOpenNote(null)

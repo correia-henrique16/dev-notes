@@ -27,7 +27,7 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
   const notesCollabHooks = useNotesCollab()
 
   const { tags, setShowNewTag, showNewTag } = tagsHooks
-  const { notes, showNewNote, setShowNewNote, showNotes, setOpenNote, openNote } = notesHooks
+  const { notes, showNewNote, setShowNewNote, showNotes, setOpenNote, openNote, setNotes } = notesHooks
   const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
   const { notesCollab, loadingCollab, showCollabNotes } = notesCollabHooks
 
@@ -79,7 +79,7 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
 
       {/* {openNote && <OpenNoteComponent notesHook={notesHooks} tags={tags}/>} */}
       {openNote && <OpenNoteComponent
-        openNote={openNote} setOpenNote={setOpenNote} tags={tags}/>}
+        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes}/>}
       
     </div>
   )

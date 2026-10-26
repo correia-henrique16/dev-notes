@@ -224,7 +224,9 @@ export async function noteRoutes(server: FastifyInstance) {
 
         return reply.code(200)
             .send({
-                message: 'Nota editada'
+                message: 'Nota editada',
+                note: note,
+                noteId: noteId
             })
     })
 

@@ -9,12 +9,13 @@ import ViewNoteComponent from "./ViewNoteComponent"
 interface OpenNoteProps {
     tags: Tag[],
     openNote: Note | null
-    setOpenNote: Dispatch<SetStateAction<Note | null>>
+    setOpenNote: Dispatch<SetStateAction<Note | null>>,
+    setNotes: Dispatch<SetStateAction<Note[]>>
 }
 
-export default function OpenNote({openNote, setOpenNote, tags} : OpenNoteProps) {
+export default function OpenNote({openNote, setOpenNote, tags, setNotes} : OpenNoteProps) {
     
-        const editHook = useEditNotes({note: openNote, setOpenNote})
+        const editHook = useEditNotes({note: openNote, setOpenNote, setNotes})
     
         return(
             <ViewNoteComponent 
