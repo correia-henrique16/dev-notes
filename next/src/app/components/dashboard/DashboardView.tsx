@@ -11,8 +11,8 @@ import TagsComponent from "./tags/Tags"
 import NoteComponent from "./notes/Note"
 import JanelasComponent from "./Janelas"
 import OpenNoteComponent from "./notes/OpenNote"
+import ViewNoteComponent from "./notes/ViewNoteComponent"
 import NewTag from "./tags/NewTag"
-import NewNote from "./notes/NewNote"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -64,8 +64,6 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
             ))}
           </div>
         }
-
-        {openNote && <OpenNoteComponent notesHook={notesHooks} tags={tags}/>}
         
 
         <button onClick={() => setShowNewNote(true)}>
@@ -75,7 +73,13 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
       </section>
 
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
-      {showNewNote && <NewNote setShowNewNote={setShowNewNote} notesHook={notesHooks} tags={tags} />}
+      {/* {showNewNote && <NewNote setShowNewNote={setShowNewNote} notesHook={notesHooks} tags={tags} />} */}
+      {showNewNote && <ViewNoteComponent
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} />}
+
+      {/* {openNote && <OpenNoteComponent notesHook={notesHooks} tags={tags}/>} */}
+      {openNote && <OpenNoteComponent
+        openNote={openNote} setOpenNote={setOpenNote} tags={tags}/>}
       
     </div>
   )

@@ -4,15 +4,7 @@ import { createNoteSchema } from "@/src/schemas/note.schema";
 import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
 import { Dispatch, SetStateAction } from "react";
-
-interface FormErrors {
-  title?: { _errors?: string[] }
-  content?: { _errors?: string[] }
-  tagIds?: { _errors?: string[] }
-  isPublic?: { _errors?: string[] }
-  publicPermission?: { _errors?: string[] }
-  collabs?: { _errors?: string[] }
-}
+import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
 
 interface EditNoteProps {
     note: Note | null,
@@ -33,10 +25,9 @@ export function useEditNotes({note, setOpenNote}: EditNoteProps) {
     }) 
 
     
+    const [showPublicPerm, setShowPublicPerm] = useState<boolean>(Boolean(note?.isPublic))
 
-    const [showPublicPerm, setShowPublicPerm] = useState<boolean | undefined>(note?.isPublic)
-
-    const [errors, setErrors] = useState<FormErrors>({})
+    const [errors, setErrors] = useState<NoteFormErrors>({})
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
 

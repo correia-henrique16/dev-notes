@@ -3,11 +3,8 @@ import { useState } from "react";
 import { createTagSchema } from "@/src/schemas/tag.schema";
 import { api } from "@/src/lib/api";
 import { Tag } from "@/src/schemas/types/tag";
+import { TagFormErrors } from "@/src/schemas/errors/formErrors";
 
-interface FormErrors {
-  name?: { _errors?: string[] }
-  color?: { _errors?: string[] }
-}
 
 export function useTags(initialTags: Tag[]) {
 
@@ -19,7 +16,7 @@ export function useTags(initialTags: Tag[]) {
     const [tags, setTags] = useState<Tag[]>(initialTags)
     const [showNewTag, setShowNewTag] = useState<boolean>(false)
 
-    const [errors, setErrors] = useState<FormErrors>({})
+    const [errors, setErrors] = useState<TagFormErrors>({})
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
 

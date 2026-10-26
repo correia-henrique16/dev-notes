@@ -3,15 +3,7 @@ import { useState } from "react";
 import { createNoteSchema } from "@/src/schemas/note.schema";
 import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
-
-interface FormErrors {
-  title?: { _errors?: string[] }
-  content?: { _errors?: string[] }
-  tagIds?: { _errors?: string[] }
-  isPublic?: { _errors?: string[] }
-  publicPermission?: { _errors?: string[] }
-  collabs?: { _errors?: string[] }
-}
+import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
 
 export function useNotes(initialNotes: Note[]) {
 
@@ -32,7 +24,7 @@ export function useNotes(initialNotes: Note[]) {
 
     const [openNote, setOpenNote] = useState<Note | null>(null)
 
-    const [errors, setErrors] = useState<FormErrors>({})
+    const [errors, setErrors] = useState<NoteFormErrors>({})
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
 
