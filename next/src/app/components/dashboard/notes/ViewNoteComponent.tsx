@@ -17,10 +17,9 @@ interface ViewNoteComponentProps {
         showPublicPerm: boolean
         setShowPublicPerm: Dispatch<SetStateAction<boolean>>
     }
-    onSuccess: (note: Note) => void
 }
 
-export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form, onSuccess} : ViewNoteComponentProps ) {
+export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form} : ViewNoteComponentProps ) {
 
     const { handleSubmit, loading, errors, serverError, setShowPublicPerm, showPublicPerm } = form //ou recebe o useNote, ou o useEditNote
 

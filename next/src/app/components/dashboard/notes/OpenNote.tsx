@@ -14,14 +14,14 @@ interface OpenNoteProps {
     onSaveSuccess: (note: Note) => void
 }
 
-export default function OpenNote({openNote, setOpenNote, tags, setNotes, onSaveSuccess} : OpenNoteProps) {
+export default function OpenNote({openNote, setOpenNote, tags, onSaveSuccess} : OpenNoteProps) {
     
         const editHook = useEditNotes({note: openNote, setOpenNote, onSaveSuccess})
     
         return(
             <ViewNoteComponent 
                 onClose={() => setOpenNote(null)} submitLabel="Guardar" tags={tags}
-                form={editHook} initialData={openNote} onSuccess={onSaveSuccess}
+                form={editHook} initialData={openNote}
             />
         )
 }
