@@ -27,8 +27,17 @@ export function useNotesCollab() {
         }
     }, [showCollabNotes, dataFetched])
 
+    const removeCollabNote = (noteId: number) => {
+        setNotesCollab(prev => prev.filter(n => n.id !== noteId))
+    }
+
+    const updateCollabNote = (updatedNote: Note) => {
+        setNotesCollab(prev => prev.map(n => n.id === updatedNote.id ? updatedNote : n))
+    }
+
     return {
-        notesCollab,
+        notesCollab, setNotesCollab, 
+        updateCollabNote, removeCollabNote,
         showCollabNotes, setShowCollabNotes,
         loadingCollab
     }

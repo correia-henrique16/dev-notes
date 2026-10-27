@@ -5,7 +5,12 @@ import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
 import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
 
-export function useNotes(initialNotes: Note[]) {
+interface UseNotesProps {
+    initialNotes: Note[]
+    onNoteCreated?: (note: Note) => void
+}
+
+export function useNotes({initialNotes, onNoteCreated}: UseNotesProps) {
 
     const [formData, setFormData] = useState({
         title: '',
@@ -27,6 +32,18 @@ export function useNotes(initialNotes: Note[]) {
     const [errors, setErrors] = useState<NoteFormErrors>({})
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const addNote = (newNote: Note) => {
+        setNotes(prev => [newNote, ...prev])
+    }
+
+    const removeNote = (noteId: number) => {
+        setNotes(prev => prev.filter(n => n.id !== noteId))
+    }
+
+    const updateNote = (updatedNote: Note) => {
+        setNotes(prev => prev.map(n => n.id === updatedNote.id ? updatedNote : n))
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -63,6 +80,10 @@ export function useNotes(initialNotes: Note[]) {
             const newNote = response.note
             
             setNotes([...notes, newNote])
+            if (onNoteCreated) {
+                onNoteCreated(newNote)
+            }
+            
             setShowNewNote(false)
             setShowPublicPerm(false)
             return true
@@ -90,6 +111,7 @@ export function useNotes(initialNotes: Note[]) {
 
     return {
         notes, setNotes, showNewNote, setShowNewNote,
+        updateNote, addNote, removeNote,
         showPublicPerm, setShowPublicPerm,
         showNotes, setShowNotes,
         openNote, setOpenNote,

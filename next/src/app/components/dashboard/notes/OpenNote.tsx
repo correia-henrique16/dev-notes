@@ -10,17 +10,18 @@ interface OpenNoteProps {
     tags: Tag[],
     openNote: Note | null
     setOpenNote: Dispatch<SetStateAction<Note | null>>,
-    setNotes: Dispatch<SetStateAction<Note[]>>
+    setNotes: Dispatch<SetStateAction<Note[]>>,
+    onSaveSuccess: (note: Note) => void
 }
 
-export default function OpenNote({openNote, setOpenNote, tags, setNotes} : OpenNoteProps) {
+export default function OpenNote({openNote, setOpenNote, tags, setNotes, onSaveSuccess} : OpenNoteProps) {
     
-        const editHook = useEditNotes({note: openNote, setOpenNote, setNotes})
+        const editHook = useEditNotes({note: openNote, setOpenNote, onSaveSuccess})
     
         return(
             <ViewNoteComponent 
                 onClose={() => setOpenNote(null)} submitLabel="Guardar" tags={tags}
-                form={editHook} initialData={openNote}
+                form={editHook} initialData={openNote} onSuccess={onSaveSuccess}
             />
         )
 }

@@ -9,10 +9,10 @@ import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
 interface EditNoteProps {
     note: Note | null,
     setOpenNote: Dispatch<SetStateAction<Note | null>>,
-    setNotes: Dispatch<SetStateAction<Note[]>>
+    onSaveSuccess: (note: Note) => void
 }
 
-export function useEditNotes({note, setOpenNote, setNotes}: EditNoteProps) {
+export function useEditNotes({note, setOpenNote, onSaveSuccess}: EditNoteProps) {
 
     const initialTagIds = note?.notesTags.map(noteTag => noteTag.tagId)
 
@@ -69,10 +69,7 @@ export function useEditNotes({note, setOpenNote, setNotes}: EditNoteProps) {
                 id: response.noteId
             }
 
-            setNotes(prevNotes => {
-                const updated = prevNotes.map(n => (Number(n.id) === Number(updatedNote.id) ? updatedNote : n)) //percorre as notas, e troca aq tem o id igual pela atualizada
-                return updated
-            })
+            onSaveSuccess(updatedNote)
             
             setShowPublicPerm(false)
             setOpenNote(null)

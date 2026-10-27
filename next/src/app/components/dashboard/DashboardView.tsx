@@ -22,14 +22,35 @@ interface DashboardViewProps {
 
 export function DashboardView({ initialNotes, initialTags }: DashboardViewProps) {
   const tagsHooks = useTags(initialTags)
-  const notesHooks = useNotes(initialNotes)
   const notesPublicHooks = useNotesPublic()
   const notesCollabHooks = useNotesCollab()
+  const notesHooks = useNotes({
+    initialNotes,
+    onNoteCreated: (newNote) => {
+      notesPublicHooks.addPublicNote(newNote)
+    }
+  })
 
   const { tags, setShowNewTag, showNewTag } = tagsHooks
   const { notes, showNewNote, setShowNewNote, showNotes, setOpenNote, openNote, setNotes } = notesHooks
   const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
   const { notesCollab, loadingCollab, showCollabNotes } = notesCollabHooks
+
+  const handleNoteCreated = (newNote: Note) => {
+    notesHooks.addNote(newNote)
+    notesPublicHooks.addPublicNote(newNote)
+  }
+
+  const handleNoteDeleted = (noteId: number) => {
+    notesHooks.removeNote(noteId)
+    notesPublicHooks.removePublicNote(noteId)
+    notesCollabHooks.removeCollabNote(noteId)
+  }
+  const handleNoteUpdated = (updatedNote: Note) => {
+    notesHooks.updateNote(updatedNote)
+    notesPublicHooks.updatePublicNote(updatedNote)
+    notesCollabHooks.updateCollabNote(updatedNote)
+  }
 
   let selectedNotes: Note[] = notes
 
@@ -73,13 +94,12 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
       </section>
 
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
-      {/* {showNewNote && <NewNote setShowNewNote={setShowNewNote} notesHook={notesHooks} tags={tags} />} */}
-      {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} />}
 
-      {/* {openNote && <OpenNoteComponent notesHook={notesHooks} tags={tags}/>} */}
+      {showNewNote && <ViewNoteComponent
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} onSuccess={handleNoteCreated}/>}
+
       {openNote && <OpenNoteComponent
-        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes}/>}
+        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated}/>}
       
     </div>
   )
