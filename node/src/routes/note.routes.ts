@@ -84,7 +84,7 @@ const verificarEditarNota = async (noteId: number, userId: string) => {
 
     //Verificar se o user é o owner, se for devolve logo certo
     const isOwner = note?.ownerId == userId 
-    if (isOwner) return true
+    if (isOwner) return 'isOwner'
 
     //Verificar se a nota é publica, e se o publicPermission é EDITOR, se for devolve logo certo
     const isPublicEditor = note?.isPublic && note.publicPermission == 'EDITOR'
@@ -222,12 +222,12 @@ export async function noteRoutes(server: FastifyInstance) {
     server.put<{Params: {id: string}}>('/notes/:id', async (request, reply) => {
         const noteId = Number(request.params.id)
 
-        const editValido = await verificarEditarNota(noteId, request.userId)
+        const podeEditar = await verificarEditarNota(noteId, request.userId)
 
-        if(!editValido) {
-            return reply.code(401)
+        if(!podeEditar) {
+            return reply.code(403)
                 .send({
-                    error: 'Nota não existe'
+                    error: 'Sem permissão'
                 })
         }
 
@@ -235,22 +235,24 @@ export async function noteRoutes(server: FastifyInstance) {
 
         const { content, isPublic, publicPermission, tagIds, title } = note
 
-        await prisma.notes.update({
+        const isOwner = podeEditar == 'isOwner'
+
+        const updatedNote = await prisma.notes.update({
             where: {
                 id: noteId
             }, 
             data: {
-                content,
-                isPublic, 
-                publicPermission, 
                 title,
-
-                notesTags: {
+                content,
+                isPublic: isOwner ? isPublic : undefined , //se for o owner, atualiza direito, se nao for, fica como tava antes
+                publicPermission: isOwner ? publicPermission : undefined, 
+                
+                notesTags: (isOwner && tagIds) ? {
                     deleteMany: {},
                     create: tagIds.map((tagId) => ({
                         tagId
                     }))
-                }
+                } : undefined
             },
             include: {
                 notesTags: {
@@ -264,7 +266,7 @@ export async function noteRoutes(server: FastifyInstance) {
         return reply.code(200)
             .send({
                 message: 'Nota editada',
-                note: note,
+                note: updatedNote,
                 noteId: noteId
             })
     })
