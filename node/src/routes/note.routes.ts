@@ -239,7 +239,12 @@ export async function noteRoutes(server: FastifyInstance) {
 
         const note = createNoteSchema.parse(request.body)
 
-        const { content, isPublic, publicPermission, tagIds, title } = note
+        const { content, isPublic, publicPermission, tagIds, title, collabs } = note
+
+        const collabsProntas = await verificarCollabs(collabs, request.userId)
+        if (!collabsProntas) {
+            return reply.code(400).send({ error: 'Um ou mais colaboradores são inválidos' })
+        }
 
         const isOwner = podeEditar == 'isOwner'
 
@@ -258,6 +263,11 @@ export async function noteRoutes(server: FastifyInstance) {
                     create: tagIds.map((tagId) => ({
                         tagId
                     }))
+                } : undefined,
+
+                collabs: (isOwner) ? {
+                    deleteMany: {},
+                    create: collabsProntas
                 } : undefined
             },
             include: {

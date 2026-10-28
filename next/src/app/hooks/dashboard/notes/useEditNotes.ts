@@ -44,10 +44,14 @@ export function useEditNotes({note, setOpenNote, onSaveSuccess}: EditNoteProps) 
         const isPublic = formData.get('isPublic') === 'true' //o isPublic fica true se vier isso na string, senao fica false
         const rawTags = formData.getAll('tagIds').map(Number)
 
+        const rawCollabs = formData.get('collabs')
+        const collabs = rawCollabs ? JSON.parse(rawCollabs as string) : []
+
         const data ={
             ... Object.fromEntries(formData.entries()),
             isPublic,
-            tagIds: rawTags.length > 0 ? rawTags : undefined //para o zod do backend ler q veio undefined e atribuir o defaultValue
+            tagIds: rawTags.length > 0 ? rawTags : undefined,
+            collabs
         } 
         
         const validacao = createNoteSchema.safeParse(data)

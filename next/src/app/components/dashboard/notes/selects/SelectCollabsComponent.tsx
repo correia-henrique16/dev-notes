@@ -20,18 +20,18 @@ export default function SelectCollabsComponent({ isOwner, initialData }: SelectC
         if (!initialData?.collabs) return []
 
         return initialData.collabs.map((c) => {
-        // Se a query incluir a relação user: c.user.userName
-        // Se tiver diretamente a propriedade userName ou apenas id
-        const name = 'user' in c && typeof c.user === 'object' && c.user !== null && 'userName' in c.user
-            ? String((c.user as { userName: string }).userName)
-            : 'userName' in c && typeof c.userName === 'string'
-            ? c.userName
-            : ''
+            // Se a query incluir a relação user: c.user.userName
+            // Se tiver diretamente a propriedade userName ou apenas id
+            const name = 'user' in c && typeof c.user === 'object' && c.user !== null && 'userName' in c.user
+                ? String((c.user as { userName: string }).userName)
+                : 'userName' in c && typeof c.userName === 'string'
+                ? c.userName
+                : ''
 
-        return {
-            userName: name,
-            permission: c.permission as Permission
-        }
+            return {
+                userName: name,
+                permission: c.permission as Permission
+            }
         })
     })
 

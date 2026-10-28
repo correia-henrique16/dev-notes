@@ -60,21 +60,14 @@ export function useNotes({initialNotes, onNoteCreated}: UseNotesProps) {
 
         //Extrair e converter a string de collabs para Array
         const rawCollabs = formData.get('collabs')
-        let parsedCollabs: { userName: string; permission: Permission }[] = []
+        const collabs = rawCollabs ? JSON.parse(rawCollabs as string) : []
         
-        if (typeof rawCollabs === 'string' && rawCollabs.trim() !== '') {
-            try {
-                parsedCollabs = JSON.parse(rawCollabs)
-            } catch {
-                parsedCollabs = []
-            }
-        }
 
         const data ={
             ... Object.fromEntries(formData.entries()),
             isPublic,
             tagIds: rawTags.length > 0 ? rawTags : undefined, //para o zod do backend ler q veio undefined e atribuir o defaultValue
-            collabs: parsedCollabs.length > 0 ? parsedCollabs : undefined
+            collabs
         } 
         
         const validacao = createNoteSchema.safeParse(data)
