@@ -20,7 +20,7 @@ interface DashboardViewProps {
   initialTags: Tag[]
 }
 
-export function DashboardView({ initialNotes, initialTags }: DashboardViewProps) {
+export function DashboardView({user, initialNotes, initialTags }: DashboardViewProps) {
   const tagsHooks = useTags(initialTags)
   const notesPublicHooks = useNotesPublic()
   const notesCollabHooks = useNotesCollab()
@@ -92,10 +92,11 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
 
       {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false}/>}
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true}/>}
 
       {openNote && <OpenNoteComponent
-        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}/>}
+        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}
+        user={user}/>}
       
     </div>
   )

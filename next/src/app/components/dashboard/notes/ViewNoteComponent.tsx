@@ -4,6 +4,7 @@ import { Permission } from "@/src/schemas/note.schema"
 import { Dispatch, SetStateAction } from "react"
 import { NoteFormErrors } from "@/src/schemas/errors/formErrors"
 import { useDeleleNote } from "@/src/app/hooks/dashboard/notes/useDeleteNotes"
+import SelectTagComponent from "./SelectTagComponent"
 
 interface ViewNoteComponentProps {
     initialData?: Note | null
@@ -19,10 +20,11 @@ interface ViewNoteComponentProps {
         setShowPublicPerm: Dispatch<SetStateAction<boolean>>
     }
     isEdit: boolean,
-    handleDelete?: (noteId: number) => void
+    handleDelete?: (noteId: number) => void,
+    isOwner: boolean
 }
 
-export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form, isEdit, handleDelete} : ViewNoteComponentProps ) {
+export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form, isEdit, handleDelete, isOwner} : ViewNoteComponentProps ) {
 
     const { serverErrorDel, handleSubmitDel, loadingDel } = useDeleleNote({setOpenNote: onClose, onSaveSuccess: handleDelete})
     const { handleSubmit, loading, errors, serverError, setShowPublicPerm, showPublicPerm } = form //ou recebe o useNote, ou o useEditNote
@@ -59,16 +61,13 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
                     />
                 </div>
 
-                <div className="flex flex-col gap-1 w-full">
-                    <span>Selecionar Tags</span>
 
-                    {tags.map((tag) => (
-                        <label key={tag.id}>
-                            <input type="checkbox" name="tagIds" value={tag.id}  defaultChecked={initialTagIds?.includes(tag.id)} />
-                            {tag.name}
-                        </label>
-                    ))}
-                </div>
+
+
+                <SelectTagComponent initialData={initialData} initialTagIds={initialTagIds} isOwner={isOwner} tags={tags} />
+
+
+
 
                 <div className="flex flex-col gap-1 w-full">
                     <label htmlFor="privacidade-select">Privacidade</label>

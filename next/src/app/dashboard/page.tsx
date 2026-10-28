@@ -16,7 +16,7 @@ export default async function Dashboard() {
                 }
             >
         
-            <DashboardContent />
+                <DashboardContent />
 
             </Suspense>
         </div>
