@@ -3,8 +3,9 @@ import { Note } from "@/src/schemas/types/note"
 import { Dispatch, SetStateAction } from "react"
 import { NoteFormErrors } from "@/src/schemas/errors/formErrors"
 import { useDeleleNote } from "@/src/app/hooks/dashboard/notes/useDeleteNotes"
-import SelectTagComponent from "./SelectTagComponent"
-import SelectPermsComponent from "./SelectPermsComponent"
+import SelectTagComponent from "./selects/SelectTagComponent"
+import SelectPermsComponent from "./selects/SelectPermsComponent"
+import SelectCollabsComponent from "./selects/SelectCollabsComponent"
 import { UserTokenPayload } from "@/src/app/utils/getUser"
 
 interface ViewNoteComponentProps {
@@ -71,7 +72,9 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
 
                 <SelectPermsComponent isOwner={isOwner} setShowPublicPerm={setShowPublicPerm} showPublicPerm={showPublicPerm} initialData={initialData} userId={user?.id} />
 
-                
+                <SelectCollabsComponent isOwner={isOwner} initialData={initialData} />
+
+
     
                 <div> 
                     {listaErros.length > 0 && (

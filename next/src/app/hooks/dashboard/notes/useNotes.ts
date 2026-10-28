@@ -4,6 +4,7 @@ import { createNoteSchema } from "@/src/schemas/note.schema";
 import { api } from "@/src/lib/api";
 import { Note } from "@/src/schemas/types/note";
 import { NoteFormErrors } from "@/src/schemas/errors/formErrors";
+import { Permission } from "@/src/schemas/note.schema";
 
 interface UseNotesProps {
     initialNotes: Note[]
@@ -57,10 +58,23 @@ export function useNotes({initialNotes, onNoteCreated}: UseNotesProps) {
         const isPublic = formData.get('isPublic') === 'true' //o isPublic fica true se vier isso na string, senao fica false
         const rawTags = formData.getAll('tagIds').map(Number)
 
+        //Extrair e converter a string de collabs para Array
+        const rawCollabs = formData.get('collabs')
+        let parsedCollabs: { userName: string; permission: Permission }[] = []
+        
+        if (typeof rawCollabs === 'string' && rawCollabs.trim() !== '') {
+            try {
+                parsedCollabs = JSON.parse(rawCollabs)
+            } catch {
+                parsedCollabs = []
+            }
+        }
+
         const data ={
             ... Object.fromEntries(formData.entries()),
             isPublic,
-            tagIds: rawTags.length > 0 ? rawTags : undefined //para o zod do backend ler q veio undefined e atribuir o defaultValue
+            tagIds: rawTags.length > 0 ? rawTags : undefined, //para o zod do backend ler q veio undefined e atribuir o defaultValue
+            collabs: parsedCollabs.length > 0 ? parsedCollabs : undefined
         } 
         
         const validacao = createNoteSchema.safeParse(data)

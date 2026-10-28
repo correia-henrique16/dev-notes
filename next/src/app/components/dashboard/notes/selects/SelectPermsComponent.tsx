@@ -38,6 +38,7 @@ export default function SelectPermsComponent({isOwner, initialData, showPublicPe
                     </select>
                 </div>
             }
+
             </>
         )
     } else {

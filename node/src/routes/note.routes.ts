@@ -6,6 +6,12 @@ import { isAuthenticated } from "../utils/isAuthenticated.ts";
 const verificarCollabs = async (collabs: { userName: string; permission: any }[], currentUserId: string) => {
   if (!collabs || collabs.length === 0) return []
 
+  const userNames = collabs.map(c => c.userName)
+  const uniqueNames = new Set(userNames)
+  if (uniqueNames.size !== userNames.length) {
+    return null // Havia nomes duplicados na lista
+  }
+
   const collabsValidadas = []
 
   for (const item of collabs) {
@@ -17,10 +23,6 @@ const verificarCollabs = async (collabs: { userName: string; permission: any }[]
     if (!user || user.id === currentUserId) {
       return null
     }
-
-    collabsValidadas.map(collab => {
-        if (collab.collaburator !== user.id) 
-    })
 
     collabsValidadas.push({
       collaburator: user.id,
