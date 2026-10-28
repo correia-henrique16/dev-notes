@@ -12,11 +12,15 @@ const verificarCollabs = async (collabs: { userName: string; permission: any }[]
     const user = await prisma.users.findUnique({
       where: { userName: item.userName },
       select: { id: true },
-    })
+    }) 
 
     if (!user || user.id === currentUserId) {
       return null
     }
+
+    collabsValidadas.map(collab => {
+        if (collab.collaburator !== user.id) 
+    })
 
     collabsValidadas.push({
       collaburator: user.id,
