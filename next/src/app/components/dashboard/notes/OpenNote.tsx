@@ -25,7 +25,7 @@ export default function OpenNote({openNote, setOpenNote, tags, onSaveSuccess, ha
         return(
             <ViewNoteComponent 
                 onClose={() => setOpenNote(null)} submitLabel="Guardar" tags={tags}
-                form={editHook} initialData={openNote} isEdit={true} handleDelete={handleDelete} isOwner={isOwner}
+                form={editHook} initialData={openNote} isEdit={true} handleDelete={handleDelete} isOwner={isOwner} user={user}
             />
         )
 }

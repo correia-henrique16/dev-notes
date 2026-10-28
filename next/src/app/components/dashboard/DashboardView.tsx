@@ -92,7 +92,7 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
 
       {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true}/>}
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true} user={user}/>}
 
       {openNote && <OpenNoteComponent
         openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}

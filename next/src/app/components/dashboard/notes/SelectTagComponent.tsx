@@ -26,6 +26,8 @@ export default function SelectTagComponent({isOwner, tags, initialTagIds, initia
     } else {
         return(
             <div className="flex gap-2">
+                <span>Tags</span>
+
                 {initialData?.notesTags?.map(({ tag }) => (
                     <span key={tag?.id} className="badge">
                         {tag?.name}
@@ -35,8 +37,4 @@ export default function SelectTagComponent({isOwner, tags, initialTagIds, initia
             </div>
         )
     }
-    return(
-        <>
-        </>
-    )
 }
