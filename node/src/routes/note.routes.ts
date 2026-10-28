@@ -271,11 +271,8 @@ export async function noteRoutes(server: FastifyInstance) {
                 } : undefined
             },
             include: {
-                notesTags: {
-                    include: {
-                        tag: true
-                    }
-                }
+                notesTags: { include: { tag: true } },
+                collabs: { include: { user: true } },
             }
         })
 
