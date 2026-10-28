@@ -6,7 +6,7 @@ export async function api(endpoint: string, init?: RequestInit) {
     const url = `${API_URL}${path}`
 
     const headers = new Headers(init?.headers)
-    if (!headers.has('Content-Type') && !(init?.body instanceof FormData)) {
+    if (init?.body && !headers.has('Content-Type') && !(init.body instanceof FormData)) {
         headers.set('Content-Type', 'application/json')
     }
 

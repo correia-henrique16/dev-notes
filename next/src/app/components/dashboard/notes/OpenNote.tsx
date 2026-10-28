@@ -11,17 +11,18 @@ interface OpenNoteProps {
     openNote: Note | null
     setOpenNote: Dispatch<SetStateAction<Note | null>>,
     setNotes: Dispatch<SetStateAction<Note[]>>,
-    onSaveSuccess: (note: Note) => void
+    onSaveSuccess: (note: Note) => void,
+    handleDelete: (noteId: number) => void
 }
 
-export default function OpenNote({openNote, setOpenNote, tags, onSaveSuccess} : OpenNoteProps) {
+export default function OpenNote({openNote, setOpenNote, tags, onSaveSuccess, handleDelete} : OpenNoteProps) {
     
         const editHook = useEditNotes({note: openNote, setOpenNote, onSaveSuccess})
     
         return(
             <ViewNoteComponent 
                 onClose={() => setOpenNote(null)} submitLabel="Guardar" tags={tags}
-                form={editHook} initialData={openNote}
+                form={editHook} initialData={openNote} isEdit={true} handleDelete={handleDelete}
             />
         )
 }

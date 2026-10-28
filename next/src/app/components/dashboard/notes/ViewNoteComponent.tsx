@@ -3,6 +3,7 @@ import { Note } from "@/src/schemas/types/note"
 import { Permission } from "@/src/schemas/note.schema"
 import { Dispatch, SetStateAction } from "react"
 import { NoteFormErrors } from "@/src/schemas/errors/formErrors"
+import { useDeleleNote } from "@/src/app/hooks/dashboard/notes/useDeleteNotes"
 
 interface ViewNoteComponentProps {
     initialData?: Note | null
@@ -17,10 +18,13 @@ interface ViewNoteComponentProps {
         showPublicPerm: boolean
         setShowPublicPerm: Dispatch<SetStateAction<boolean>>
     }
+    isEdit: boolean,
+    handleDelete?: (noteId: number) => void
 }
 
-export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form} : ViewNoteComponentProps ) {
+export default function ViewNoteComponent({onClose, initialData, submitLabel, tags, form, isEdit, handleDelete} : ViewNoteComponentProps ) {
 
+    const { serverErrorDel, handleSubmitDel, loadingDel } = useDeleleNote({setOpenNote: onClose, onSaveSuccess: handleDelete})
     const { handleSubmit, loading, errors, serverError, setShowPublicPerm, showPublicPerm } = form //ou recebe o useNote, ou o useEditNote
 
     const initialTagIds = initialData?.notesTags?.map(noteTag => noteTag.tagId) ?? []
@@ -32,7 +36,8 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
         ...(errors?.isPublic?._errors || []),
         ...(errors?.publicPermission?._errors || []),
         ...(errors?.collabs?._errors || []),
-        ...(serverError ? [serverError] : [])
+        ...(serverError ? [serverError] : []),
+        ...(serverErrorDel ? [serverErrorDel] : [])
     ]
     
     return(
@@ -99,8 +104,13 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
                     className="authBtn">
                     {loading ? 'A carregar...' : submitLabel}
                 </button>
-    
-    
+                
+                {isEdit && 
+                    <button type="button" disabled={loadingDel} onClick={(e) => initialData?.id && handleSubmitDel?.(e, initialData.id)}>
+                        {loadingDel ? 'A apagar...' : 'Apagar'}
+                    </button>
+                }
+
             </form>
 
         </div>

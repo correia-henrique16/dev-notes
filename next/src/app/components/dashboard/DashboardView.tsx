@@ -36,11 +36,6 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
   const { notesPublic, loadingPublic, showPublicNotes } = notesPublicHooks
   const { notesCollab, loadingCollab, showCollabNotes } = notesCollabHooks
 
-  const handleNoteCreated = (newNote: Note) => {
-    notesHooks.addNote(newNote)
-    notesPublicHooks.addPublicNote(newNote)
-  }
-
   const handleNoteDeleted = (noteId: number) => {
     notesHooks.removeNote(noteId)
     notesPublicHooks.removePublicNote(noteId)
@@ -97,10 +92,10 @@ export function DashboardView({ initialNotes, initialTags }: DashboardViewProps)
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
 
       {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags}/>}
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false}/>}
 
       {openNote && <OpenNoteComponent
-        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated}/>}
+        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}/>}
       
     </div>
   )
