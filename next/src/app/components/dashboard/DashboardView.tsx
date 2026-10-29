@@ -14,6 +14,7 @@ import JanelasComponent from "./Janelas"
 import OpenNoteComponent from "./notes/OpenNote"
 import ViewNoteComponent from "./notes/ViewNoteComponent"
 import NewTag from "./tags/NewTag"
+import ProfileComponent from "./Profile"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -100,11 +101,15 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
 
       {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true} user={user}/>}
+        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true} user={user}
+      />}
 
       {openNote && <OpenNoteComponent
         openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}
-        user={user}/>}
+        user={user}
+      />}
+
+      <ProfileComponent user={user}/>
       
     </div>
   )

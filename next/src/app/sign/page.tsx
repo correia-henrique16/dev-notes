@@ -1,4 +1,4 @@
-import ChangeAuthPage from "./changeAuth";
+import ChangeAuthPage from "../components/sign/changeAuth"
 
 export default function SignPage() {
     return(

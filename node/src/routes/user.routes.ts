@@ -126,7 +126,7 @@ export async function userRoutes(server: FastifyInstance) {
             })
     })
 
-    server.post('/logout', {preHandler: isAuthenticated}, async (request, reply) => {
+    server.post('/logout', async (request, reply) => {
         reply.clearCookie('token', {
             path: '/',
         })
