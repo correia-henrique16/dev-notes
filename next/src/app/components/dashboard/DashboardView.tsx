@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from "react"
 import { Note } from "@/src/schemas/types/note"
 import { Tag } from "@/src/schemas/types/tag"
 import { UserTokenPayload } from "../../utils/getUser"
@@ -21,6 +22,8 @@ interface DashboardViewProps {
 }
 
 export function DashboardView({user, initialNotes, initialTags }: DashboardViewProps) {
+  const [filtroTags, setFiltroTags] = useState<Tag[]>([])
+
   const tagsHooks = useTags(initialTags)
   const notesPublicHooks = useNotesPublic()
   const notesCollabHooks = useNotesCollab()
@@ -55,6 +58,11 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
   if (showCollabNotes) selectedNotes = notesCollab
 
 
+  const notesFiltered = filtroTags.length == 0
+    ? selectedNotes
+    : selectedNotes.filter(note => note.notesTags.some(nt => filtroTags.some(ft => ft.id == nt.tagId)))
+
+
   return (
     <div className="w-full h-full flex flex-col">
 
@@ -65,14 +73,14 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
         
         {/* Barra de Ações Alinhada à Direita */}
         <div className="flex items-center justify-end px-3">
-          <TagsComponent tags={tags} setShowNewTag={setShowNewTag}/>
+          <TagsComponent tags={tags} setShowNewTag={setShowNewTag} setFiltroTags={setFiltroTags} filtroTags={filtroTags}/>
         </div>
 
         {loadingPublic || loadingCollab ? 
           <p>Loadinggg</p>
         :
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
-            {selectedNotes.map((note) => (
+            {notesFiltered.map((note) => (
               <button
                 key={note.id} onClick={() => setOpenNote(note)}
               >
