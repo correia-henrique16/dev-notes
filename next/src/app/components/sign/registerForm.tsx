@@ -41,7 +41,7 @@ export default function RegisterForm() {
                  className="text-xs font-bold text-castanho uppercase tracking-wider">
                     Password
                 </label>
-                <input type="password" name='password' id="password-input"
+                <input type="password" name='password' id="password-input" autoComplete="new-password"
                  className="authInput"
                 />
             </div>
@@ -51,7 +51,7 @@ export default function RegisterForm() {
                  className="text-xs font-bold text-castanho uppercase tracking-wider">
                     Confirm Password
                 </label>
-                <input type="password" name='confirmPassword' id="confirm-input"
+                <input type="password" name='confirmPassword' id="confirm-input" autoComplete="new-password"
                  className="authInput"
                 />
             </div>

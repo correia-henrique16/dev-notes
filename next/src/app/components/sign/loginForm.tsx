@@ -18,7 +18,7 @@ export default function LoginForm() {
                  className="text-xs font-bold text-castanho uppercase tracking-wider">
                     UserName
                 </label>
-                <input type="text" name='userName' id="userName-input"
+                <input type="text" name='userName' id="userName-input" autoComplete="off"
                  className="authInput"
                 />
             </div>
@@ -28,7 +28,7 @@ export default function LoginForm() {
                  className="text-xs font-bold text-castanho uppercase tracking-wider">
                     Password
                 </label>
-                <input type="password" name='password' id="password-input"
+                <input type="password" name='password' id="password-input" autoComplete="new-password"
                  className="authInput"
                 />
             </div>
