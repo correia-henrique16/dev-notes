@@ -46,6 +46,7 @@ export function useLogin() {
                 body: JSON.stringify(validacao.data)
             })
 
+            setServerError('')
             router.push('/dashboard')
 
         } catch (err: unknown) {

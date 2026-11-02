@@ -84,6 +84,8 @@ export function useNotes({initialNotes, onNoteCreated}: UseNotesProps) {
                 body: JSON.stringify(validacao.data)
             }) as {note: Note}
 
+            setServerError('')
+
             const newNote = response.note
             
             setNotes([...notes, newNote])

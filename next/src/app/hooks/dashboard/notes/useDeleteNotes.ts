@@ -22,6 +22,7 @@ export function useDeleleNote({setOpenNote, onSaveSuccess}: DeleteNoteProps) {
                 method: 'DELETE'
             })
 
+            setServerError('')
             setOpenNote?.(null)
             onSaveSuccess?.(noteId)
             return true

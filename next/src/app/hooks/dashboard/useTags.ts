@@ -51,6 +51,7 @@ export function useTags(initialTags: Tag[]) {
                 ...validacao.data
             }
             
+            setServerError('')
             setTags([...tags, newTag])
             setShowNewTag(false)
             return true

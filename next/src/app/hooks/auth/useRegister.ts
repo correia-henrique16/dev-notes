@@ -64,6 +64,7 @@ export function useRegister() {
                 body: JSON.stringify(validacao.data)
             })
 
+            setServerError('')
             router.push('/dashboard')
 
         } catch (err: unknown) {
@@ -77,9 +78,7 @@ export function useRegister() {
             const apiError = err as { error?: string; message?: string }
             const message = apiError?.error || apiError?.message || ''
 
-            if (message.includes('User name already exists')) {
-                setServerError('User name já existe')
-            } else if (message) {
+            if (message) {
                 setServerError(message)
             } else {
                 setServerError('Ocorreu um erro inesperado ao registar')

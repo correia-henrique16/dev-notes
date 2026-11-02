@@ -73,6 +73,7 @@ export function useEditNotes({note, setOpenNote, onSaveSuccess}: EditNoteProps) 
                 id: response.noteId
             }
 
+            setServerError('')
             onSaveSuccess(updatedNote)
             
             setShowPublicPerm(false)

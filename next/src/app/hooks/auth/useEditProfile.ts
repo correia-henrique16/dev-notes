@@ -50,6 +50,7 @@ export function useEditProfile({user, setShowProfileModal}: EditNoteProps) {
                 body: JSON.stringify(validacao.data)
             })
             
+            setServerError('')
             router.refresh()
             setShowProfileModal(false)
             return true
