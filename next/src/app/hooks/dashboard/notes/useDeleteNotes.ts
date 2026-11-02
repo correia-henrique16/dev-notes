@@ -40,7 +40,7 @@ export function useDeleleNote({setOpenNote, onSaveSuccess}: DeleteNoteProps) {
             if (message) {
                 setServerError(message)
             } else {
-                setServerError('Ocorreu um erro inesperado ao criar a nota')
+                setServerError('Ocorreu um erro inesperado ao apagar a nota')
             }
         } finally {
             setLoading(false)

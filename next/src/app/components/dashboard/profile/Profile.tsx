@@ -1,12 +1,15 @@
-import { UserTokenPayload } from "../../utils/getUser"
+import { UserTokenPayload } from "../../../utils/getUser"
 import { useState } from "react"
 import { api } from "@/src/lib/api"
 import { useRouter } from "next/navigation"
+import { Dispatch, SetStateAction } from "react"
 
 interface ProfileComponent {
     user: UserTokenPayload | null
+    setShowProfileModal: Dispatch<SetStateAction<boolean>>
 }
-export default function ProfileComponent({user}: ProfileComponent) {
+
+export default function ProfileComponent({user, setShowProfileModal}: ProfileComponent) {
     const [isClicked, setIsClicked] = useState<boolean>(false)
     const router = useRouter()
 
@@ -27,7 +30,7 @@ export default function ProfileComponent({user}: ProfileComponent) {
         <section className="flex flex-col">
             {isClicked && 
                 <>
-                <button>Ver Perfil</button>
+                <button onClick={() => setShowProfileModal(true)}>Editar Perfil</button>
                 <button onClick={() => handleLogout()}>Logout</button>
                 </>
             }

@@ -14,7 +14,8 @@ import JanelasComponent from "./Janelas"
 import OpenNoteComponent from "./notes/OpenNote"
 import ViewNoteComponent from "./notes/ViewNoteComponent"
 import NewTag from "./tags/NewTag"
-import ProfileComponent from "./Profile"
+import ProfileComponent from "./profile/Profile"
+import ProfileModal from "./profile/ProfileModal"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -24,6 +25,7 @@ interface DashboardViewProps {
 
 export function DashboardView({user, initialNotes, initialTags }: DashboardViewProps) {
   const [filtroTags, setFiltroTags] = useState<Tag[]>([])
+  const [showProfileModal, setShowProfileModal] = useState<boolean>(false)
 
   const tagsHooks = useTags(initialTags)
   const notesPublicHooks = useNotesPublic()
@@ -109,7 +111,9 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
         user={user}
       />}
 
-      <ProfileComponent user={user}/>
+      <ProfileComponent user={user} setShowProfileModal={setShowProfileModal}/>
+      
+      {showProfileModal && <ProfileModal user={user} setShowProfileModal={setShowProfileModal} showProfileModal={showProfileModal} />}
       
     </div>
   )

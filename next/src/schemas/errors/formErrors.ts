@@ -11,3 +11,9 @@ export interface TagFormErrors {
   name?: { _errors?: string[] }
   color?: { _errors?: string[] }
 }
+
+
+export interface ProfileFormErrors {
+  name?: { _errors?: string[] }
+  userName?: { _errors?: string[] }
+}

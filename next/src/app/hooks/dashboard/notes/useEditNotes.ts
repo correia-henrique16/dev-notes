@@ -93,7 +93,7 @@ export function useEditNotes({note, setOpenNote, onSaveSuccess}: EditNoteProps) 
             if (message) {
                 setServerError(message)
             } else {
-                setServerError('Ocorreu um erro inesperado ao criar a nota')
+                setServerError('Ocorreu um erro inesperado ao editar a nota')
             }
         } finally {
             setLoading(false)
