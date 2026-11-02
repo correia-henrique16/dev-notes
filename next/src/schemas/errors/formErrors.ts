@@ -12,8 +12,13 @@ export interface TagFormErrors {
   color?: { _errors?: string[] }
 }
 
-
 export interface ProfileFormErrors {
   name?: { _errors?: string[] }
   userName?: { _errors?: string[] }
+}
+
+export interface PasswordFormErrors {
+  oldPassword?: { _errors?: string[] }
+  newPassword?: { _errors?: string[] }
+  confirmPassword?: { _errors?: string[] }
 }

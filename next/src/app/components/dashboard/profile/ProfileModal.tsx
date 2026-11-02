@@ -1,15 +1,16 @@
 import { UserTokenPayload } from "../../../utils/getUser"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { useEditProfile } from "@/src/app/hooks/auth/useEditProfile"
+import ChangePassForm from "./ChangePassForm"
 
 interface ProfileComponent {
     user: UserTokenPayload | null
     setShowProfileModal: Dispatch<SetStateAction<boolean>>
-    showProfileModal: boolean
 }
-export default function ProfileModal({user, setShowProfileModal, showProfileModal}: ProfileComponent) {
+export default function ProfileModal({user, setShowProfileModal}: ProfileComponent) {
 
     const { errors, formData, handleSubmit, loading, serverError } = useEditProfile({user, setShowProfileModal})
+    const [showChangePass, setShowChangePass] = useState<boolean>(false)
 
     const listaErros = [
         ...(errors?.name?._errors || []),
@@ -19,6 +20,9 @@ export default function ProfileModal({user, setShowProfileModal, showProfileModa
 
     return(
         <section className="flex flex-col">
+
+            <button onClick={() => setShowProfileModal(false)}>Voltar</button>
+
             <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4 w-1/3">
                 <div className="flex flex-col gap-1 w-full">
                     <label htmlFor="name-input"
@@ -55,6 +59,10 @@ export default function ProfileModal({user, setShowProfileModal, showProfileModa
                 </button>
 
             </form>
+                
+                <button onClick={() => setShowChangePass(!showChangePass)}>{showChangePass ? 'Fechar' : 'Alterar PassWord'}</button>
+
+                {showChangePass && <ChangePassForm user={user} setShowChangePass={setShowChangePass} />}
         </section>
     )
 }

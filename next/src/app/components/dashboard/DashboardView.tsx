@@ -113,8 +113,8 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
 
       <ProfileComponent user={user} setShowProfileModal={setShowProfileModal}/>
       
-      {showProfileModal && <ProfileModal user={user} setShowProfileModal={setShowProfileModal} showProfileModal={showProfileModal} />}
-      
+      {showProfileModal && <ProfileModal user={user} setShowProfileModal={setShowProfileModal} />}
+
     </div>
   )
 }
