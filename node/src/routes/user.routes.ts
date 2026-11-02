@@ -182,4 +182,54 @@ export async function userRoutes(server: FastifyInstance) {
                 accessToken
             })
     })
+
+    server.patch('/pass', {preHandler: isAuthenticated}, async(request, reply) => {
+        const userId = request.userId
+
+        const user = await prisma.users.findUnique({
+            where: {
+                id: userId
+            }
+        })
+
+        if (!user) {
+            return reply.code(404)
+                .send({
+                    error: 'User not found!'
+                })
+        }
+
+        const {newPassword, oldPassword} = changePassSchema.parse(request.body)
+        
+
+        if (newPassword == oldPassword) {
+            return reply.code(400)
+                .send({
+                    error: 'A nova password tem que ser diferente da atual'
+                })
+        }
+
+        const oldIsValid = await compare(oldPassword, user.password)
+
+        if (!oldIsValid) {
+            return reply.code(400)
+                .send({
+                    error: 'Password atual incorreta'
+                })
+        }
+
+        await prisma.users.update({
+            where: {
+                id: request.userId
+            },
+            data: {
+                password: await hash(newPassword)
+            }
+        })
+
+        return reply.code(200)
+            .send({
+                message: 'Password atualizada com sucesso!',
+            })
+    })
 }

@@ -40,7 +40,10 @@ export const editProfileSchema = z.object({
 })
 
 export const changePassSchema = z.object({
-    password: z.string()
+    oldPassword: z.string()
+        .min(1, "Tem que escrever a password atual"),
+        
+    newPassword: z.string()
         .min(8, "A password deve ter pelo menos 8 caracteres")
         .refine((value) => /[A-Z]/.test(value), {
         message: "A password deve conter pelo menos uma letra maiúscula",
