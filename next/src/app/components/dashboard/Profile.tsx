@@ -27,7 +27,7 @@ export default function ProfileComponent({user}: ProfileComponent) {
         <section className="flex flex-col">
             {isClicked && 
                 <>
-                <button>Editar Perfil</button>
+                <button>Ver Perfil</button>
                 <button onClick={() => handleLogout()}>Logout</button>
                 </>
             }

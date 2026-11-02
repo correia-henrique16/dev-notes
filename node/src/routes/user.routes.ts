@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { prisma } from '../lib/prisma.ts'
-import { registerSchema, loginSchema } from "../schemas/user.schema.ts";
+import { registerSchema, loginSchema, editProfileSchema, changePassSchema } from "../schemas/user.schema.ts";
 import {hash, compare} from "../lib/bcrypt.ts"
 import { signJWT } from '../lib/jwt.ts'
 import { isAuthenticated } from "../utils/isAuthenticated.ts";
@@ -132,5 +132,54 @@ export async function userRoutes(server: FastifyInstance) {
         })
 
         return reply.send({ message: 'Logout efetuado com sucesso' })
+    })
+
+    server.patch('/profile', {preHandler: isAuthenticated}, async (request, reply) => {
+        const {name, userName} = editProfileSchema.parse(request.body)
+
+        if (userName.trim() !== request.userName) {
+            const isUserNameAvailable = await prisma.users.count({
+                where: {
+                    userName
+                }
+            }) == 0
+
+            if (!isUserNameAvailable) {
+                return reply.code(400)
+                    .send({
+                        error : 'User name already exists'
+                    })
+            }
+        }
+
+        const user = await prisma.users.update({
+            where: {
+                id: request.userId
+            },
+            data: {
+                name,
+                userName
+            }
+        })
+
+        const accessToken = signJWT({
+            id: user.id,
+            userName: user.userName,
+            name: user.name
+        })
+
+        reply.setCookie('token', accessToken, {
+            path: '/', // Define que o cookie é valido para o site inteiro (tudo oq comesse com /)
+            httpOnly: true, // O JavaScript do cliente não consegue ler nem roubar
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+            maxAge: 60 * 60 * 24 * 365, // 1 ano inteiro em segundos (60s * 60m * 24h * 365d)
+        })
+
+        return reply.code(200)
+            .send({
+                message: 'Perfil atualizado com sucesso!',
+                accessToken
+            })
     })
 }
