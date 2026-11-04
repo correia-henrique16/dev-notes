@@ -7,7 +7,8 @@ import SelectTagComponent from "./selects/SelectTagComponent"
 import SelectPermsComponent from "./selects/SelectPermsComponent"
 import SelectCollabsComponent from "./selects/SelectCollabsComponent"
 import { UserTokenPayload } from "@/src/app/utils/getUser"
-import EditorComponent from "./selects/EditorComponent"
+import EditorComponent from "./EditorComponent"
+import { Permission } from "@/src/schemas/note.schema"
 
 interface ViewNoteComponentProps {
     initialData?: Note | null
@@ -32,6 +33,14 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
 
     const { serverErrorDel, handleSubmitDel, loadingDel } = useDeleleNote({setOpenNote: onClose, onSaveSuccess: handleDelete})
     const { handleSubmit, loading, errors, serverError, setShowPublicPerm, showPublicPerm } = form //ou recebe o useNote, ou o useEditNote
+
+
+    const userCollab = initialData?.collabs?.find((c) => c.collaburator === user?.id)
+    const isCollabEditor = userCollab?.permission === Permission.EDITOR
+    const isPublicEditor = Boolean(initialData?.isPublic && initialData?.publicPermission === Permission.EDITOR)
+
+
+    const canEdit = !isEdit || isOwner || isCollabEditor || isPublicEditor
 
     const initialTagIds = initialData?.notesTags?.map(noteTag => noteTag.tagId) ?? []
 
@@ -79,10 +88,11 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
                         name="title"
                         placeholder="Título da nota..."
                         defaultValue={initialData?.title}
+                        readOnly={!canEdit}
                         className="w-full bg-transparent text-xl md:text-2xl font-bold text-lighter placeholder:text-lighter/30 border-b border-border-light pb-2 focus:outline-none focus:border-lighter/60 transition-colors"
                         />
 
-                        <EditorComponent initialContent={initialData?.content}/>
+                        <EditorComponent initialContent={initialData?.content} canEdit={canEdit}/>
                     </div>
 
                     {/* Coluna Direita: Painel lateral de configurações */}
@@ -120,7 +130,7 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
                     </div>
 
                     <div className="flex items-center gap-3">
-                        {isEdit && (
+                        {(isEdit && isOwner) && (
                             <button
                                 type="button"
                                 disabled={loadingDel}
@@ -131,13 +141,16 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
                             </button>
                         )}
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="px-5 py-2 rounded-xl bg-lighter text-darker text-xs font-bold hover:opacity-90 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
-                            >
-                            {loading ? "A processar..." : submitLabel}
-                        </button>
+                        {canEdit && (
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="px-5 py-2 rounded-xl bg-lighter text-darker text-xs font-bold hover:opacity-90 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                                >
+                                {loading ? "A processar..." : submitLabel}
+                            </button>
+                        )}
+                        
                     </div>
                 </div>
             </form>
