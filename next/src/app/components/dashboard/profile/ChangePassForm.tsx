@@ -16,14 +16,14 @@ export default function ChangePassForm({setShowChangePass}: ProfileComponent) {
     ]
 
     return(
-        <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4 w-1/3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3.5 w-full">
             <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="old-password-input"
                  className="text-xs font-bold text-castanho uppercase tracking-wider">
                     Password Atual
                 </label>
                 <input type="password" name='oldPassword' id="old-password-input" autoComplete="new-password"
-                 className="authInput"
+                 className="w-full px-3.5 py-2 rounded-xl bg-black/25 border border-border-light text-lighter text-sm focus:outline-none focus:border-lighter/60"
                 />
             </div>
 
@@ -33,7 +33,7 @@ export default function ChangePassForm({setShowChangePass}: ProfileComponent) {
                     Nova Password
                 </label>
                 <input type="password" name='newPassword' id="new-password-input" autoComplete="new-password"
-                 className="authInput"
+                 className="w-full px-3.5 py-2 rounded-xl bg-black/25 border border-border-light text-lighter text-sm focus:outline-none focus:border-lighter/60"
                 />
             </div>
 
@@ -43,7 +43,7 @@ export default function ChangePassForm({setShowChangePass}: ProfileComponent) {
                     Confirm Password
                 </label>
                 <input type="password" name='confirmPassword' id="confirm-input" autoComplete="new-password"
-                 className="authInput"
+                 className="w-full px-3.5 py-2 rounded-xl bg-black/25 border border-border-light text-lighter text-sm focus:outline-none focus:border-lighter/60"
                 />
             </div>
 
@@ -55,10 +55,23 @@ export default function ChangePassForm({setShowChangePass}: ProfileComponent) {
                 )}
             </div>
 
-            <button type="submit" disabled={loading}
-            className="authBtn">
-                {loading ? 'A carregar...' : 'Confirmar'}
-            </button>
+            <div className="flex items-center gap-2 pt-2">
+                <button 
+                    type="button"
+                    onClick={() => setShowChangePass(false)}
+                    className="w-1/3 py-2.5 rounded-xl border border-border-light text-lighter/80 font-bold text-xs hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+                >
+                    Voltar
+                </button>
+
+                <button 
+                    type="submit" 
+                    disabled={loading}
+                    className="flex-1 py-2.5 rounded-xl bg-lighter text-darker font-bold text-xs hover:opacity-90 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                >
+                    {loading ? 'A carregar...' : 'Confirmar'}
+                </button>
+            </div>
 
         </form>
     )

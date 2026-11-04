@@ -3,6 +3,8 @@ import { useState } from "react"
 import { api } from "@/src/lib/api"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
+import userImg from "../../../../../public/user-icon.png"
+import Image from "next/image"
 
 interface ProfileComponent {
     user: UserTokenPayload | null
@@ -27,16 +29,34 @@ export default function ProfileComponent({user, setShowProfileModal}: ProfileCom
     }   
 
     return(
-        <section className="flex flex-col">
-            {isClicked && 
-                <>
-                <button onClick={() => setShowProfileModal(true)}>Editar Perfil</button>
-                <button onClick={() => handleLogout()}>Logout</button>
-                </>
-            }
+        <section className="relative w-fit flex flex-col">
+            {isClicked && (
+                <div className="absolute bottom-full mb-3 left-0 w-44 rounded-xl border border-border-light bg-darker/95 backdrop-blur-md p-1.5 shadow-2xl flex flex-col gap-1 z-30">
+                    <button 
+                        type="button"
+                        onClick={() => {
+                        setShowProfileModal(true)
+                        setIsClicked(false)
+                        }}
+                        className="w-full text-left px-3 py-2 text-xs font-semibold text-lighter rounded-lg hover:bg-white/10 active:scale-98 transition-all cursor-pointer flex items-center gap-2"
+                    >
+                        <span>Editar Perfil</span>
+                    </button>
 
-            <button onClick={() => setIsClicked(!isClicked)}>
-                {user?.userName}
+                    <div className="h-px bg-border-light/50 my-0.5" />
+
+                    <button 
+                        type="button"
+                        onClick={() => handleLogout()}
+                        className="w-full text-left px-3 py-2 text-xs font-semibold text-red-400 rounded-lg hover:bg-red-500/10 active:scale-98 transition-all cursor-pointer flex items-center gap-2"
+                    >
+                        <span>Logout</span>
+                    </button>
+                </div>
+            )}
+
+            <button onClick={() => setIsClicked(!isClicked)} className="icon-action-btn p-1">
+                <Image src={userImg} alt="User" className="w-fit h-fit"/>
             </button>
         </section>
         
