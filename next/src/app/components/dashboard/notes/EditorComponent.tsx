@@ -39,6 +39,30 @@ export default function EditorComponent({ initialContent, canEdit }: EditorCompo
       attributes: {
         class: 'w-full flex-1 focus:outline-none min-h-[220px] text-lighter text-sm md:text-base leading-relaxed',
       },
+      handleKeyDown: (view, event) => {
+        if (event.key == 'Tab') {
+          event.preventDefault()
+          const {state, dispatch} = view
+          const {selection} = state
+          const {from} = selection
+
+          if (event.shiftKey) {
+            const textBefore = state.doc.textBetween(Math.max(0, from - 2), from)
+            
+            // Vê quantos espaços existem logo antes do cursor (máximo 4)
+            const spacesMatch = textBefore.match(/ +$/)
+            if (spacesMatch) {
+              const deleteCount = spacesMatch[0].length
+              dispatch(state.tr.delete(from - deleteCount, from))
+              return true
+            }
+            return true
+          }
+
+          dispatch(view.state.tr.insertText('  '))
+          return true
+        }
+      }
     },
     onUpdate: ({ editor }) => {
         if (editor.isEmpty) {

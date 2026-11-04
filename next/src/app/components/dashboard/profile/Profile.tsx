@@ -11,7 +11,7 @@ interface ProfileComponent {
     setShowProfileModal: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ProfileComponent({user, setShowProfileModal}: ProfileComponent) {
+export default function ProfileComponent({setShowProfileModal}: ProfileComponent) {
     const [isClicked, setIsClicked] = useState<boolean>(false)
     const router = useRouter()
 
