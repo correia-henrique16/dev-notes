@@ -43,15 +43,18 @@ export default function SelectCollabsComponent({ isOwner, initialData }: SelectC
         if (!initialData?.collabs || initialData.collabs.length === 0) return null
 
         return (
-        <div className="flex flex-col gap-1 w-full text-xs">
-            <span className="text-zinc-400 font-medium">Colaboradores:</span>
-            <div className="flex flex-wrap gap-1.5">
-            {collabs.map((c, i) => (
-                <span key={i} className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700">
-                {c.userName || 'Utilizador'} ({c.permission})
-                </span>
-            ))}
-            </div>
+            <div className="flex flex-col gap-1.5 w-full text-xs">
+                <span className="text-xs font-bold text-mid2 uppercase tracking-wider">Colaboradores:</span>
+                <div className="flex flex-wrap gap-1.5">
+                {collabs.map((c, i) => (
+                    <span
+                    key={i}
+                    className="px-2.5 py-1 rounded-lg bg-black/20 text-lighter border border-border-light"
+                    >
+                        {c.userName || 'Utilizador'} ({c.permission})
+                    </span>
+                ))}
+                </div>
         </div>
         )
     }
@@ -71,13 +74,14 @@ export default function SelectCollabsComponent({ isOwner, initialData }: SelectC
 
     return (
         <div className="flex flex-col gap-2 w-full">
-        <label className="text-sm font-medium">Colaboradores</label>
+        <label className="text-xs font-bold text-mid2 uppercase tracking-wider">
+            Colaboradores
+        </label>
 
-        {/* Input oculto que o FormData apanha no submit */}
-        <input 
-            type="hidden" 
-            name="collabs" 
-            value={JSON.stringify(collabs)} 
+        <input
+            type="hidden"
+            name="collabs"
+            value={JSON.stringify(collabs)}
         />
 
         <div className="flex gap-2">
@@ -92,40 +96,40 @@ export default function SelectCollabsComponent({ isOwner, initialData }: SelectC
                 handleAdd()
                 }
             }}
-            className="authInput flex-1"
+            className="flex-1 px-2.5 py-1.5 rounded-xl bg-black/25 border border-border-light text-lighter text-xs focus:outline-none focus:border-lighter/60"
             />
 
             <select
             value={currentPerm}
             onChange={(e) => setCurrentPerm(e.target.value as Permission)}
-            className="bg-zinc-900 border border-zinc-700 rounded px-2 text-sm"
+            className="bg-black/25 border border-border-light rounded-xl px-2 text-xs text-lighter focus:outline-none"
             >
-            <option value={Permission.READONLY}>Leitor</option>
-            <option value={Permission.EDITOR}>Editor</option>
+            <option value={Permission.READONLY} className="bg-darker">Leitor</option>
+            <option value={Permission.EDITOR} className="bg-darker">Editor</option>
             </select>
 
             <button
             type="button"
             onClick={handleAdd}
-            className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors"
+            className="px-3 py-1.5 bg-lighter text-darker rounded-xl text-xs font-bold hover:opacity-90 active:scale-95 transition-all cursor-pointer"
             >
-            Adicionar
+            +
             </button>
         </div>
 
         {collabs.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-1">
+            <div className="flex flex-wrap gap-1.5 mt-1 max-h-28 overflow-y-auto">
             {collabs.map((c, index) => (
                 <span
                 key={`${c.userName}-${index}`}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-800 border border-zinc-700 text-xs"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black/25 border border-border-light text-xs text-lighter"
                 >
                 <span>{c.userName}</span>
-                <span className="text-zinc-400 text-[10px]">({c.permission})</span>
+                <span className="text-mid2 text-[10px]">({c.permission})</span>
                 <button
                     type="button"
                     onClick={() => handleRemove(index)}
-                    className="text-red-400 hover:text-red-300 font-bold ml-1"
+                    className="text-lighter/40 hover:text-red-400 font-bold ml-0.5 cursor-pointer"
                 >
                     ×
                 </button>

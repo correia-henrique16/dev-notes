@@ -34,7 +34,7 @@ export default function NoteComponent({ note }: NoteProps) {
 
 
             <p className="relative z-10 text-xs md:text-sm text-lighter/75 group-hover:text-lighter/90 line-clamp-3 leading-relaxed flex-1 mt-2">
-                {note.content || 'Sem conteúdo...'}
+                {note.content ? note.content.replace(/<[^>]*>/g, ' ').trim() : 'Sem conteúdo...'}
             </p>
 
 
