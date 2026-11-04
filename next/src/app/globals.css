@@ -1,21 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1e1e20;
+  --foreground: #ededed;
+  
+  /* A tua paleta de base */
   --darker: #363537;
   --mid: #5F5F5F;
   --mid2: #9D8E88;
   --lighter: #EDE6E3;
+  --surface-light: #434245;
+  --border-light: rgba(237, 230, 227, 0.15);
 
+  /* Bordas, divisores e painéis interiores baseados na paleta */
+  --card-bg: #2d2c2e;
+  --panel-border: #4a494c;
+  --panel-border-subtle: #3d3c3e;
 }
 
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-darker: var(--darker);
+  --color-mid: var(--mid);
+  --color-mid2: var(--mid2);
+  --color-lighter: var(--lighter);
+  --color-surface-light: var(--surface-light);
+  --color-border-light: var(--border-light);
+  
+  --color-card: var(--card-bg);
+  --color-panel-border: var(--panel-border);
+  --color-panel-border-subtle: var(--panel-border-subtle);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Utilities de Auth */
 @utility authInput {
-  @apply w-full p-3 rounded-xl font-medium bg-white 
+  @apply w-full p-3 rounded-xl font-medium bg-white text-darker;
 }
 
 @utility authBtn {
-  @apply w-1/2 py-3.5 bg-lighter text-darker font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50
+  @apply w-1/2 py-3.5 bg-lighter text-darker font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50;
 }
 
 @utility auth-card {
@@ -30,26 +58,34 @@
   @apply text-2xl font-bold text-darker tracking-tight;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-
-  --color-darker: var(--darker);
-  --color-mid: var(--mid);
-  --color-mid2: var(--mid2);
-  --color-lighter: var(--lighter);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Utilities Reutilizáveis do Dashboard */
+@utility tab-base {
+  @apply px-8 py-3 text-sm md:text-base font-semibold rounded-t-xl -skew-x-12 border-t border-x cursor-pointer transition-all duration-150 select-none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@utility tab-active {
+  @apply bg-surface-light text-lighter font-bold border-t-2 border-t-lighter border-x border-border-light shadow-md translate-y-px z-10;
+}
+
+@utility tab-inactive {
+  @apply bg-black/20 text-lighter/60 border-border-light hover:text-lighter hover:bg-black/10;
+}
+
+@utility note-card {
+  @apply relative flex flex-col text-left w-full rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40 cursor-pointer overflow-hidden;
+}
+
+@utility icon-action-btn {
+  @apply w-11 h-11 rounded-full bg-lighter text-darker font-bold text-2xl flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer;
+}
+
+@utility tag-badge {
+  @apply text-[10px] font-medium px-2 py-0.5 rounded-md flex items-center gap-1.5 transition-all;
 }
 
 body {
   width: 100vw;
   font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
 }

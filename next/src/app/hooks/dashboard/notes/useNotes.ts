@@ -22,7 +22,7 @@ export function useNotes({initialNotes, onNoteCreated}: UseNotesProps) {
         collabs: '',
     })
 
-    const [showNotes, setShowNotes] = useState<boolean>(false)
+    const [showNotes, setShowNotes] = useState<boolean>(true)
     const [notes, setNotes] = useState<Note[]>(initialNotes)
     const [showNewNote, setShowNewNote] = useState<boolean>(false)
 

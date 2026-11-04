@@ -8,27 +8,38 @@ interface JanelasProps {
     notesCollabHooks: ReturnType<typeof useNotesCollab>
 }
 
-export default function JanelasComponent({notesPublicHooks, notesHooks, notesCollabHooks}: JanelasProps) {
+export default function JanelasComponent({ notesPublicHooks, notesHooks, notesCollabHooks }: JanelasProps) {
+    const { setShowPublicNotes, showPublicNotes } = notesPublicHooks
+    const { setShowCollabNotes, showCollabNotes } = notesCollabHooks
+    const { setShowNotes, showNotes } = notesHooks
 
-    const { setShowPublicNotes } = notesPublicHooks
-    const { setShowCollabNotes } = notesCollabHooks
-    const { setShowNotes } = notesHooks
-
-    return(
+    return (
         <div className="flex items-end pl-3 gap-1">
-            <button onClick={() => {setShowPublicNotes(false); setShowNotes(true); setShowCollabNotes(false)}}
-             className="px-7 py-2.5 text-sm font-semibold border-t border-x border-zinc-700/80 rounded-t-lg -skew-x-12 bg-zinc-800/90 text-zinc-100 shadow-sm translate-y-px z-10 backdrop-blur-sm transition-all">
-                <span className="inline-block skew-x-12">minhas</span>
+
+            <button
+            type="button"
+            onClick={() => { setShowPublicNotes(false); setShowNotes(true); setShowCollabNotes(false); }}
+            className={`tab-base ${showNotes ? 'tab-active' : 'tab-inactive'}`}
+            >
+                <span className="inline-block skew-x-12">Minhas</span>
             </button>
-    
-            <button onClick={() => {setShowPublicNotes(false); setShowNotes(false); setShowCollabNotes(true)}}
-             className="px-7 py-2.5 text-sm font-medium border-t border-x border-zinc-800 rounded-t-lg -skew-x-12 bg-zinc-900/40 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40 transition-all">
-                <span className="inline-block skew-x-12">collabs</span>
+
+
+            <button
+            type="button"
+            onClick={() => { setShowPublicNotes(false); setShowNotes(false); setShowCollabNotes(true); }}
+            className={`tab-base ${showCollabNotes ? 'tab-active' : 'tab-inactive'}`}
+            >
+                <span className="inline-block skew-x-12">Collabs</span>
             </button>
-    
-            <button onClick={() => {setShowPublicNotes(true); setShowNotes(false); setShowCollabNotes(false)}}
-             className="px-7 py-2.5 text-sm font-medium border-t border-x border-zinc-800 rounded-t-lg -skew-x-12 bg-zinc-900/40 text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/40 transition-all">
-                <span className="inline-block skew-x-12">publics</span>
+
+
+            <button
+            type="button"
+            onClick={() => { setShowPublicNotes(true); setShowNotes(false); setShowCollabNotes(false); }}
+            className={`tab-base ${showPublicNotes ? 'tab-active' : 'tab-inactive'}`}
+            >
+                <span className="inline-block skew-x-12">Publics</span>
             </button>
         </div>
     )

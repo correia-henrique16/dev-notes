@@ -67,53 +67,96 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
 
 
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full flex flex-col flex-1 min-h-0">
 
-      <JanelasComponent notesPublicHooks={notesPublicHooks} notesHooks={notesHooks} notesCollabHooks={notesCollabHooks}/>
+      <JanelasComponent 
+        notesPublicHooks={notesPublicHooks} 
+        notesHooks={notesHooks} 
+        notesCollabHooks={notesCollabHooks}
+      />
 
-      {/* Contentor Principal */}
-      <section className="w-full border-t border-zinc-700/80 pt-5 flex flex-col gap-6">
+      {/* Janela central alinhada ao teu desenho */}
+      <section className="relative w-full flex-1 bg-surface-light border-2 border-border-light rounded-b-2xl md:rounded-tr-2xl shadow-2xl flex flex-col overflow-hidden">
         
-        {/* Barra de Ações Alinhada à Direita */}
-        <div className="flex items-center justify-end px-3">
-          <TagsComponent tags={tags} setShowNewTag={setShowNewTag} setFiltroTags={setFiltroTags} filtroTags={filtroTags}/>
+        <div className="flex items-center justify-end px-4 py-3 border-b border-panel-border-subtle bg-black/15">
+          <TagsComponent 
+            tags={tags} 
+            setShowNewTag={setShowNewTag} 
+            setFiltroTags={setFiltroTags} 
+            filtroTags={filtroTags}
+          />
         </div>
 
-        {loadingPublic || loadingCollab ? 
-          <p>Loadinggg</p>
-        :
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-3">
-            {notesFiltered.map((note) => (
-              <button
-                key={note.id} onClick={() => setOpenNote(note)}
-              >
-                <NoteComponent note={note}/>
-              </button>
-            ))}
-          </div>
-        }
-        
+        {/* Grelha com Scroll Vertical */}
+        <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-24">
+          {loadingPublic || loadingCollab ? (
+            <p className="text-center text-lighter/50 animate-pulse text-xs py-8">A carregar...</p>
+          ) : notesFiltered.length === 0 ? (
+            <p className="text-center text-lighter/40 text-xs py-8">Sem notas a apresentar.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5">
+              {notesFiltered.map((note) => (
+                <button
+                  key={note.id} 
+                  type="button"
+                  onClick={() => setOpenNote(note)}
+                  className="w-full text-left"
+                >
+                  <NoteComponent note={note} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
 
-        <button onClick={() => setShowNewNote(true)}>
-          +
-        </button>
+        {/* Rodapé: Perfil à esquerda e "+" à direita */}
+        <footer className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-surface-light via-surface-light/90 to-transparent flex items-center justify-between pointer-events-none">
+          <div className="pointer-events-auto">
+            <ProfileComponent user={user} setShowProfileModal={setShowProfileModal} />
+          </div>
+
+          <button 
+            type="button"
+            onClick={() => setShowNewNote(true)}
+            className="pointer-events-auto icon-action-btn"
+            title="Criar nova nota"
+          >
+            +
+          </button>
+        </footer>
 
       </section>
 
+
       {showNewTag && <NewTag setShowNewTag={setShowNewTag} tagsHook={tagsHooks} />}
 
-      {showNewNote && <ViewNoteComponent
-        onClose={() => setShowNewNote(false)} submitLabel="Criar" form={notesHooks} tags={tags} isEdit={false} isOwner={true} user={user}
-      />}
+      {showNewNote && (
+        <ViewNoteComponent
+          onClose={() => setShowNewNote(false)} 
+          submitLabel="Criar" 
+          form={notesHooks} 
+          tags={tags} 
+          isEdit={false} 
+          isOwner={true} 
+          user={user}
+        />
+      )}
 
-      {openNote && <OpenNoteComponent
-        openNote={openNote} setOpenNote={setOpenNote} tags={tags} setNotes={setNotes} onSaveSuccess={handleNoteUpdated} handleDelete={handleNoteDeleted}
-        user={user}
-      />}
+      {openNote && (
+        <OpenNoteComponent
+          openNote={openNote} 
+          setOpenNote={setOpenNote} 
+          tags={tags} 
+          setNotes={setNotes} 
+          onSaveSuccess={handleNoteUpdated} 
+          handleDelete={handleNoteDeleted}
+          user={user}
+        />
+      )}
 
-      <ProfileComponent user={user} setShowProfileModal={setShowProfileModal}/>
-      
-      {showProfileModal && <ProfileModal user={user} setShowProfileModal={setShowProfileModal} />}
+      {showProfileModal && (
+        <ProfileModal user={user} setShowProfileModal={setShowProfileModal} />
+      )}
 
     </div>
   )
