@@ -54,7 +54,7 @@ export default function NoteComponent({ note }: NoteProps) {
                             }}
                             >
                                 <span 
-                                    className="w-2 h-2 rounded-full shrink-0 shadow-[0_0_8px] transition-all" 
+                                    className="w-2 h-2 rounded-full shrink-0 transition-all" 
                                     style={{ 
                                     backgroundColor: tagColor,
                                     color: tagColor // faz o glow do shadow projetar a cor real da tag

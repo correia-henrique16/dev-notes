@@ -25,7 +25,7 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
   return(
     <>
 
-    <div className="flex flex-row gap-2 w-full items-center justify-end px-5">
+    <div className="flex flex-row gap-2.5 w-full items-center justify-end px-6 py-1">
       {filtroTags.map(tag => {
         const tagColor = tag.color || '#EDE6E3'
         return (
@@ -35,14 +35,13 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
             onClick={() => handleRemoveFiltro(tag)}
             className="px-3.5 py-1.5 rounded-xl text-xs md:text-sm font-semibold text-lighter cursor-pointer flex items-center gap-2 transition-all duration-150 hover:scale-105 active:scale-95 shadow-sm"
             style={{
-              backgroundColor: `${tagColor}26`,
               borderColor: `${tagColor}99`,
               borderWidth: '1.5px',
               borderStyle: 'solid',
             }}
           >
             <span 
-              className="w-2.5 h-2.5 rounded-full shrink-0 shadow-[0_0_8px]" 
+              className="w-2.5 h-2.5 rounded-full shrink-0" 
               style={{ 
                 backgroundColor: tagColor,
                 color: tagColor 
@@ -79,9 +78,9 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
                 key={tag.id}
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-zinc-300 hover:bg-zinc-800/80 hover:text-white transition-all cursor-pointer"
               >
-                <span
-                  className="w-2.5 h-2.5 rounded-full shrink-0 shadow-sm"
-                  style={{ backgroundColor: tag.color || '#71717a' }}
+                <span 
+                  className="w-2.5 h-2.5 rounded-full shrink-0" 
+                  style={{ backgroundColor: tag.color }} 
                 />
                 <span className="truncate">{tag.name}</span>
               </button>
