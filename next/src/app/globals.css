@@ -83,6 +83,13 @@
   @apply text-[10px] font-medium px-2 py-0.5 rounded-md flex items-center gap-1.5 transition-all;
 }
 
+@utility modal-backdrop {
+  @apply fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4;
+}
+
+@utility modal-card {
+  @apply relative w-full max-w-md bg-darker border border-border-light rounded-2xl p-6 shadow-2xl flex flex-col gap-5 text-lighter;
+}
 body {
   width: 100vw;
   font-family: Arial, Helvetica, sans-serif;
