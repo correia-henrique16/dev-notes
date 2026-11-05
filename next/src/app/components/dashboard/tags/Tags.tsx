@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import { Tag } from "@/src/schemas/types/tag"
 
 interface TagProps {
@@ -9,6 +9,9 @@ interface TagProps {
 }
 
 export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtroTags}: TagProps) {
+
+  const [isOpenMobile, setIsOpenMobile] = useState<boolean>(false)
+
   const handleAddFiltro = (tag: Tag) => {
     if (filtroTags.includes(tag)) return
 
@@ -56,15 +59,18 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
 
 
     <div className="relative group">
-      <button className="px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-lighter text-xs md:text-sm font-bold tracking-wide transition-all duration-150 cursor-pointer shadow-sm hover:border-white/30">
+      <button
+      type="button"
+      onClick={() => setIsOpenMobile(prev => !prev)}
+      className="px-4 py-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-lighter text-xs md:text-sm font-bold tracking-wide transition-all duration-150 cursor-pointer shadow-sm hover:border-white/30">
         Tags
       </button>
 
 
       {/* Menu Dropdown que desliza para a esquerda ao dar HOVER */}
-      <div className="absolute right-full top-0 pr-2 hidden group-hover:flex z-30">
+      <div className={`absolute right-full top-0 pr-2 z-30 ${isOpenMobile ? 'flex' : 'hidden md:group-hover:flex'}`}>
         <div className="w-48 max-h-56 overflow-y-auto bg-darker/95 backdrop-blur-md border border-panel-border rounded-xl p-1.5 shadow-2xl flex flex-col gap-1">
-          <button onClick={() => setShowNewTag(true)}
+          <button onClick={() => {setShowNewTag(true); setIsOpenMobile(false)}}
             className="w-full text-left px-3 py-1.5 text-xs font-semibold text-lighter/80 hover:text-lighter hover:bg-white/5 rounded-lg transition-colors border-b border-panel-border-subtle pb-2 mb-1 cursor-pointer flex items-center justify-between"
           >
               Nova tag
