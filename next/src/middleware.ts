@@ -28,6 +28,6 @@ export function middleware(request: NextRequest) {
 // barra os ficheiros estaticos, e os restantes vao para a funçao middleware verificar
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    "/((?!api|_next/static|_next/image|favicon.ico|manifest.json|logo).*)",
   ],
 }

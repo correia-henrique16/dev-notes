@@ -3,7 +3,7 @@ import { useState } from "react"
 import { api } from "@/src/lib/api"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
-import userImg from "../../../../../public/user-icon.png"
+import userImg from "@/public/imgs/user-icon.png"
 import Image from "next/image"
 
 interface ProfileComponent {

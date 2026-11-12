@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DevNotes - Bloco de Notas para Programadores",
   description: "Bloco de notas para programadores/estudantes de programação apontarem os seus conhecimentos, tudo num único lugar",
+  manifest: "/manifest.json"
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
