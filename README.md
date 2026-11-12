@@ -2,7 +2,7 @@
 
 Note-taking web app for developers, with a tag system to organize and link notes. Built to practice a decoupled architecture, with a Node.js (Fastify) backend and a Next.js frontend, and to implement authentication from scratch instead of relying on a third-party auth service.
 
-> ⚠️ **Deploy status:** the app runs fully in a local environment. Deployment is still being finalized. [Remover esta linha quando o deploy estiver a funcionar]
+> ⚠️ **Deploy status:** the app runs fully in a local environment. Deployment is still being finalized.
 
 <!-- Quando o deploy funcionar: 🔗 [Live Demo](URL) -->
 

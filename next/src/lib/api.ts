@@ -2,8 +2,11 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 export async function api(endpoint: string, init?: RequestInit) {
+
     const path = endpoint.startsWith('/') ? endpoint : `/${endpoint}`
-    const url = `${API_URL}${path}`
+    const url = typeof window == 'undefined'
+        ? `${API_URL}${path}` // no servidor do Next.js, precisa do link completo e não tem bloqueios de cookies do browser
+        : `/api${path}` //no browser, usa /api/... que bate na Vercel e o next.config reencaminha para o backend, mantendo o cookie no mesmo domínio
 
     const headers = new Headers(init?.headers)
     if (init?.body && !headers.has('Content-Type') && !(init.body instanceof FormData)) {

@@ -15,6 +15,16 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  // ... mantém o resto do teu ficheiro igual
+  async rewrites() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${apiUrl}/:path*`,
+      }, //quando o servidor recebe /api/..., sabe que tem q reencaminhar para o apiUrl/..., isto porque o url da api é noutro servidor diferente
+    ]
+  },
 };
 
 export default nextConfig;
