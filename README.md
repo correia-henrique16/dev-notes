@@ -2,9 +2,7 @@
 
 Note-taking web app for developers, with a tag system to organize and link notes. Built to practice a decoupled architecture, with a Node.js (Fastify) backend and a Next.js frontend, and to implement authentication from scratch instead of relying on a third-party auth service.
 
-> ⚠️ **Deploy status:** the app runs fully in a local environment. Deployment is still being finalized.
-
-<!-- Quando o deploy funcionar: 🔗 [Live Demo](URL) -->
+🔗 [Live Demo](URL)
 
 ## Features
 
@@ -32,6 +30,6 @@ Note-taking web app for developers, with a tag system to organize and link notes
 
 ## Deployment notes
 
-The backend is hosted on Render's free tier, so the server sleeps when idle and the first request can take 30+ seconds to respond.
+The backend is hosted on Render's free tier, so the server sleeps when idle and the first request can take 50+ seconds to respond.
 
 ## Screenshots

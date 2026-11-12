@@ -15,7 +15,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // ... mantém o resto do teu ficheiro igual
   async rewrites() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
     return [
