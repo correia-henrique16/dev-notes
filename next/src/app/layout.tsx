@@ -13,14 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dev-Notes",
+  title: "DevNotes - Bloco de Notas para Programadores",
   description: "Bloco de notas para programadores/estudantes de programação apontarem os seus conhecimentos, tudo num único lugar",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="pt"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

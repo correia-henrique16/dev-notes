@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Fundo escuro arredondado -->
+  <rect width="64" height="64" rx="14" fill="#171717" />
+
+  <!-- Argolas no topo (3 argolas grossas para não empastar a 16px) -->
+  <path d="M21 15V9M32 15V9M43 15V9" stroke="#E5E5E0" stroke-width="4.5" stroke-linecap="round" />
+
+  <!-- Corpo do bloco com canto inferior esquerdo dobrado -->
+  <path d="M14 14H50V52C50 53.6569 48.6569 55 47 55H22L14 47V14Z" stroke="#E5E5E0" stroke-width="4" stroke-linejoin="round" />
+
+  <!-- Linha divisória do cabeçalho do bloco -->
+  <path d="M14 23H50" stroke="#E5E5E0" stroke-width="3.5" />
+
+  <!-- Dobrazinha inferior esquerda -->
+  <path d="M14 47H22V55" stroke="#E5E5E0" stroke-width="3.5" stroke-linejoin="round" />
+
+  <!-- Símbolo </> no centro -->
+  <path d="M27 34L22 38.5L27 43M37 34L42 38.5L37 43M33.5 32.5L30.5 44.5" stroke="#E5E5E0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
