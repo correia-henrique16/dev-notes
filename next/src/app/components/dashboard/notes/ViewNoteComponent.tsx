@@ -80,9 +80,9 @@ export default function ViewNoteComponent({onClose, initialData, submitLabel, ta
 
             {/* Formulário com 2 colunas e rodapé integrado */}
             <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
-                <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-y-auto">
+                <div className="flex flex-col md:flex-row flex-1 min-h-0 min-w-0 overflow-y-auto">
                     {/* Coluna Esquerda: Espaço de escrita */}
-                    <div className="flex flex-col flex-1 p-5 md:p-6 gap-4 min-h-80">
+                    <div className="flex flex-col flex-1 min-w-0 p-5 md:p-6 gap-4 min-h-80">
                         <input
                         type="text"
                         name="title"

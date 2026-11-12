@@ -151,8 +151,10 @@ export default function EditorComponent({ initialContent, canEdit }: EditorCompo
       
 
       {/* Área onde se escreve */}
-      <div className="flex-1 overflow-y-auto py-2">
-        <EditorContent editor={editor} />
+      <div className="flex-1 min-w-0 overflow-y-auto py-2">
+        <EditorContent editor={editor}
+          className='w-full max-w-full [&_.ProseMirror]:outline-none [&_.ProseMirror]:w-full [&_.ProseMirror]:wrap-anywhere'
+        />
       </div>
 
       {/* Input oculto que o formulário envia no submit */}
