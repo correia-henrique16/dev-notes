@@ -1,3 +1,11 @@
+<div align="center">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./next/public/logo/logo-titulo.png" />
+        <source media="(prefers-color-scheme: light)" srcset="./next/public/logo/logo-titulo-dark.png" />
+        <img alt="DevNotes" src="./public/logo-titulo.png" width="220" />
+  </picture>
+</div>
+
 # Dev-Notes
 
 Note-taking web app for developers, with a tag system to organize and link notes. Built to practice a decoupled architecture, with a Node.js (Fastify) backend and a Next.js frontend, and to implement authentication from scratch instead of relying on a third-party auth service.
@@ -33,3 +41,9 @@ Note-taking web app for developers, with a tag system to organize and link notes
 The backend is hosted on Render's free tier, so the server sleeps when idle and the first request can take 50+ seconds to respond.
 
 ## Screenshots
+
+![Login](next/public/screenshots/login_print.png)
+![Dashboard](next/public/screenshots/dashboard_print.png)
+![Dashboard - Collab](next/public/screenshots/collab_print.png)
+![Criar nota](next/public/screenshots/criar_nota_print.png)
+![Nota aberta](next/public/screenshots/nota_aberta_print.png)
