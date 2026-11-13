@@ -15,7 +15,7 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center gap-4 w-1/3">
             <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="userName-input"
-                 className="text-xs font-bold text-castanho uppercase tracking-wider">
+                 className="authLabel">
                     UserName
                 </label>
                 <input type="text" name='userName' id="userName-input" autoComplete="off"
@@ -25,7 +25,7 @@ export default function LoginForm() {
 
             <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="password-input"
-                 className="text-xs font-bold text-castanho uppercase tracking-wider">
+                 className="authLabel">
                     Password
                 </label>
                 <input type="password" name='password' id="password-input" autoComplete="new-password"

@@ -46,6 +46,10 @@
   @apply w-1/2 py-3.5 bg-lighter text-darker font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50;
 }
 
+@utility authLabel {
+  @apply text-sm font-bold text-darker
+}
+
 @utility auth-card {
   @apply w-full max-w-md flex flex-col items-center gap-4 bg-lighter p-8 rounded-2xl shadow-xl;
 }
