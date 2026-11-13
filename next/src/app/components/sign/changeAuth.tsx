@@ -4,6 +4,7 @@ import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
 import { useChangeAuth } from "@/src/app/hooks/auth/useChangeAuth";
 import Image from "next/image";
+import logo from "@/public/logo/logo-titulo.png"
 
 export default function ChangeAuthPage() {
   const { showRegister, setShowRegister } = useChangeAuth();
@@ -17,7 +18,7 @@ export default function ChangeAuthPage() {
       <section className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 text-center text-lighter">
 
 
-        <Image alt="DevNotes" src="/logo-titulo.png" width={400} height={400} priority className="w-44 sm:w-56 md:w-80 h-auto select-none"/>
+        <Image alt="DevNotes" src={logo} width={400} height={400} priority className="w-44 sm:w-56 md:w-80 h-auto select-none"/>
 
       </section>
 

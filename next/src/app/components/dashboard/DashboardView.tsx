@@ -16,6 +16,7 @@ import ViewNoteComponent from "./notes/ViewNoteComponent"
 import NewTag from "./tags/NewTag"
 import ProfileComponent from "./profile/Profile"
 import ProfileModal from "./profile/ProfileModal"
+import Loading from "../Loading"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -90,7 +91,7 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
         {/* Grelha com Scroll Vertical */}
         <div className="flex-1 overflow-y-auto p-4 md:p-6 pb-24">
           {loadingPublic || loadingCollab ? (
-            <p className="text-center text-lighter/50 animate-pulse text-xs py-8">A carregar...</p>
+            <Loading />
           ) : notesFiltered.length === 0 ? (
             <p className="text-center text-lighter/40 text-xs py-8">Sem notas a apresentar.</p>
           ) : (
