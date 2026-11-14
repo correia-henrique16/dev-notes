@@ -10,7 +10,7 @@
 
 Note-taking web app for developers, with a tag system to organize and link notes. Built to practice a decoupled architecture, with a Node.js (Fastify) backend and a Next.js frontend, and to implement authentication from scratch instead of relying on a third-party auth service.
 
-🔗 [Live Demo](URL)
+🔗 [Live Demo](https://dev-notes-nu-khaki.vercel.app/)
 
 ## Features
 
