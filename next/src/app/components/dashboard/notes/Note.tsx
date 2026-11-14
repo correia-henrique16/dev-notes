@@ -9,9 +9,8 @@ export default function NoteComponent({ note }: NoteProps) {
 
     return (
         <div 
-            className="note-card border group"
+            className="note-card border group bg-card"
             style={{
-                backgroundColor: '#2d2c2e', // Ligeiramente mais escuro que o #363537 da janela
                 borderColor: primaryTagColor ? `${primaryTagColor}66` : 'rgba(237, 230, 227, 0.12)'
             }}
         >
@@ -27,13 +26,13 @@ export default function NoteComponent({ note }: NoteProps) {
 
 
             <div className="pb-2 mb-2">
-                <h3 className="relative z-10 font-bold text-lighter text-base tracking-tight truncate group-hover:text-white">
+                <h3 className="relative z-10 font-bold text-lighter text-base tracking-tight truncate group-hover:text-foreground">
                     {note.title || 'Sem título'}
                 </h3>
             </div>
 
 
-            <p className="relative z-10 text-xs md:text-sm text-lighter/75 group-hover:text-lighter/90 line-clamp-3 leading-relaxed flex-1 mt-2">
+            <p className="relative z-10 text-xs md:text-sm text-lighter/85 group-hover:text-lighter/90 line-clamp-3 leading-relaxed flex-1 mt-2">
                 {note.content ? note.content.replace(/<[^>]*>/g, ' ').trim() : 'Sem conteúdo...'}
             </p>
 
@@ -45,22 +44,14 @@ export default function NoteComponent({ note }: NoteProps) {
                     return (
                         <span
                             key={nt.tagId}
-                            className="tag-badge text-lighter font-medium text-xs px-2.5 py-1"
-                            style={{
-                                backgroundColor: `${tagColor}26`, // 15% opacidade
-                                borderColor: `${tagColor}80`,     // borda bem nítida (50% opacidade)
-                                borderWidth: '1px',
-                                borderStyle: 'solid',
-                            }}
-                            >
-                                <span 
-                                    className="w-2 h-2 rounded-full shrink-0 transition-all" 
-                                    style={{ 
-                                    backgroundColor: tagColor,
-                                    color: tagColor // faz o glow do shadow projetar a cor real da tag
-                                    }} 
-                                />
-                            <span className="truncate">{nt.tag?.name}</span>
+                            className="tag-badge note-tag-pill text-lighter font-medium text-xs px-2.5 py-1 border"
+                            style={{ "--tag-color": tagColor } as React.CSSProperties}
+                        >
+                            <span
+                                className="w-2 h-2 rounded-full shrink-0 border border-black/20"
+                                style={{ backgroundColor: tagColor }}
+                            />
+                            {nt.tag?.name}
                         </span>
                     )
                 })}

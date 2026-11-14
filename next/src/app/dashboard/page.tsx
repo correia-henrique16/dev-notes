@@ -1,6 +1,6 @@
 import { DashboardContent } from "../components/dashboard/DashboardContent";
 import { Suspense } from "react";
-import Loading from "../components/Loading";
+import Loading from "../components/utils/Loading";
 
 
 export default async function Dashboard() {

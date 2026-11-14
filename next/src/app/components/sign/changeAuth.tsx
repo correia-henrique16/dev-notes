@@ -11,7 +11,7 @@ export default function ChangeAuthPage() {
 
   return (
     <div
-      className={`w-full min-h-screen flex flex-col transition-all duration-300 ${
+      className={`w-full min-h-screen flex flex-col transition-all duration-300 bg-[#363537] ${
         showRegister ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >
@@ -22,7 +22,7 @@ export default function ChangeAuthPage() {
 
       </section>
 
-      <section className="w-full lg:w-1/2 flex justify-center items-center p-6 bg-mid">
+      <section className="w-full lg:w-1/2 flex justify-center items-center p-6 bg-[#5F5F5F]">
 
         <div className="auth-card">
 

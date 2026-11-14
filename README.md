@@ -45,5 +45,6 @@ The backend is hosted on Render's free tier, so the server sleeps when idle and 
 ![Login](next/public/screenshots/login_print.png)
 ![Dashboard](next/public/screenshots/dashboard_print.png)
 ![Dashboard - Collab](next/public/screenshots/collab_print.png)
-![Criar nota](next/public/screenshots/criar_nota_print.png)
-![Nota aberta](next/public/screenshots/nota_aberta_print.png)
+![Create note](next/public/screenshots/criar_nota_print.png)
+![Open Note](next/public/screenshots/nota_aberta_print.png)
+![Light Mode](next/public/screenshots/dashboard_light_print.png)

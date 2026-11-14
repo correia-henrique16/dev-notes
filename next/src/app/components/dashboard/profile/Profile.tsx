@@ -3,7 +3,8 @@ import { useState } from "react"
 import { api } from "@/src/lib/api"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
-import userImg from "@/public/imgs/user-icon.png"
+import userImgPreto from "@/public/imgs/user-icon.png"
+import userImgBranco from "@/public/imgs/user-icon-darker.png"
 import Image from "next/image"
 
 interface ProfileComponent {
@@ -56,7 +57,8 @@ export default function ProfileComponent({setShowProfileModal}: ProfileComponent
             )}
 
             <button onClick={() => setIsClicked(!isClicked)} className="icon-action-btn p-1">
-                <Image src={userImg} alt="User" className="w-fit h-fit"/>
+                <Image src={userImgPreto} alt="User" className="w-fit h-fit block light:hidden"/>
+                <Image src={userImgBranco} alt="User" className="w-fit h-fit hidden light:block"/>
             </button>
         </section>
         

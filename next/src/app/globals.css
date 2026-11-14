@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@custom-variant light (&:where(.light, .light *));
+
 
 :root {
   --background: #1e1e20;
@@ -16,6 +18,23 @@
   --card-bg: #2d2c2e;
   --panel-border: #4a494c;
   --panel-border-subtle: #3d3c3e;
+}
+
+.light {
+  --background: #dcd4d0;
+  --foreground: #363537;
+
+  /* A paleta exata invertida */
+  --darker: #b6afac;
+  --mid: #9D8E88;
+  --mid2: #5F5F5F;
+  --lighter: #363537;
+  --surface-light: #e4e4e4;
+  --border-light: rgba(54, 53, 55, 0.15);
+  
+  --card-bg: #9b9592;
+  --panel-border: #c7bdb8;
+  --panel-border-subtle: #d5ccc7;
 }
 
 @theme inline {
@@ -38,34 +57,36 @@
 }
 
 /* Utilities de Auth */
+/* Utilities de Auth (cores fixas, não mudam com o tema) */
 @utility authInput {
-  @apply w-full p-3 rounded-xl font-medium bg-white text-darker;
+  @apply w-full p-3 rounded-xl font-medium bg-white text-[#363537];
 }
 
 @utility authBtn {
-  @apply w-1/2 py-3.5 bg-lighter text-darker font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50;
+  @apply w-1/2 py-3.5 bg-[#EDE6E3] text-[#363537] font-bold rounded-xl hover:opacity-95 active:scale-95 transition-all cursor-pointer text-center mt-2 disabled:opacity-50;
 }
 
 @utility authLabel {
-  @apply text-sm font-bold text-darker
+  @apply text-sm font-bold text-[#363537];
 }
 
 @utility auth-card {
-  @apply w-full max-w-md flex flex-col items-center gap-4 bg-lighter p-8 rounded-2xl shadow-xl;
+  @apply w-full max-w-md flex flex-col items-center gap-4 bg-[#EDE6E3] p-8 rounded-2xl shadow-xl;
 }
 
 @utility auth-link {
-  @apply font-semibold text-darker underline hover:opacity-75 transition-opacity cursor-pointer;
+  @apply font-semibold text-[#363537] underline hover:opacity-75 transition-opacity cursor-pointer;
 }
 
 @utility auth-title {
-  @apply text-2xl font-bold text-darker tracking-tight;
+  @apply text-2xl font-bold text-[#363537] tracking-tight;
 }
 
 /* Utilities Reutilizáveis do Dashboard */
 @utility tab-base {
-  @apply px-8 py-3 text-sm md:text-base font-semibold rounded-t-xl -skew-x-12 border-t border-x cursor-pointer transition-all duration-150 select-none;
+  @apply px-4 sm:px-8 py-3 text-sm md:text-base font-semibold rounded-t-xl -skew-x-12 border-t border-x cursor-pointer transition-all duration-150 select-none;
 }
+
 
 @utility tab-active {
   @apply bg-surface-light text-lighter font-bold border-t-2 border-t-lighter border-x border-border-light shadow-md translate-y-px z-10;
@@ -94,6 +115,19 @@
 @utility modal-card {
   @apply relative w-full max-w-md bg-darker border border-border-light rounded-2xl p-6 shadow-2xl flex flex-col gap-5 text-lighter;
 }
+
+/* Estilo padrão das tags nas notas (Dark Mode) */
+.note-tag-pill {
+  background-color: color-mix(in srgb, var(--tag-color) 15%, transparent);
+  border-color: color-mix(in srgb, var(--tag-color) 35%, transparent);
+}
+
+/* Estilo das tags nas notas no Light Mode */
+.light .note-tag-pill {
+  background-color: var(--surface-light);
+  border-color: var(--border-light);
+}
+
 body {
   width: 100vw;
   font-family: Arial, Helvetica, sans-serif;

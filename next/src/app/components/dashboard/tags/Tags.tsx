@@ -77,7 +77,7 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
           </button>
           
           {tags.length === 0 ? (
-            <span className="text-xs text-zinc-500 px-3 py-2 text-center">Sem tags criadas</span>
+            <span className="text-xs text-lighter px-3 py-2 text-center">Sem tags criadas</span>
           ) : (
             tags.map((tag) => (
               <button onClick={() => handleAddFiltro(tag)}
@@ -85,10 +85,10 @@ export default function TagsComponent({tags, setShowNewTag, setFiltroTags, filtr
                 className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium text-zinc-300 hover:bg-zinc-800/80 hover:text-white transition-all cursor-pointer"
               >
                 <span 
-                  className="w-2.5 h-2.5 rounded-full shrink-0" 
+                  className="w-2.5 h-2.5 rounded-full shrink-0 border border-black" 
                   style={{ backgroundColor: tag.color }} 
                 />
-                <span className="truncate">{tag.name}</span>
+                <span className="truncate text-lighter">{tag.name}</span>
               </button>
             ))
           )}

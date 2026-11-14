@@ -16,7 +16,8 @@ import ViewNoteComponent from "./notes/ViewNoteComponent"
 import NewTag from "./tags/NewTag"
 import ProfileComponent from "./profile/Profile"
 import ProfileModal from "./profile/ProfileModal"
-import Loading from "../Loading"
+import Loading from "../utils/Loading"
+import { ThemeToggle } from "../utils/ThemeToggle"
 
 interface DashboardViewProps {
   user: UserTokenPayload | null
@@ -70,11 +71,16 @@ export function DashboardView({user, initialNotes, initialTags }: DashboardViewP
   return (
     <div className="w-full flex flex-col flex-1 min-h-0">
 
-      <JanelasComponent 
-        notesPublicHooks={notesPublicHooks} 
-        notesHooks={notesHooks} 
-        notesCollabHooks={notesCollabHooks}
-      />
+      <div className="w-full flex items-center justify-between gap-2 pr-1">
+        <JanelasComponent 
+          notesPublicHooks={notesPublicHooks} 
+          notesHooks={notesHooks} 
+          notesCollabHooks={notesCollabHooks}
+        />
+
+        <ThemeToggle />
+      </div>
+      
 
       {/* Janela central alinhada ao teu desenho */}
       <section className="relative w-full flex-1 bg-surface-light border-2 border-border-light rounded-b-2xl md:rounded-tr-2xl shadow-2xl flex flex-col overflow-hidden">

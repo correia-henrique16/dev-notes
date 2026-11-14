@@ -2,7 +2,8 @@ import { getUser } from "../../utils/getUser"
 import { getNotesUser, getTags } from "../../utils/getBD"
 import { DashboardView } from "./DashboardView"
 import Image from "next/image"
-import logo from "@/public/logo/logo-titulo.png"
+import logoPreto from "@/public/logo/logo-titulo.png"
+import logoBranco from "@/public/logo/logo-titulo-dark.png"
 
 export async function DashboardContent() {
     const user = await getUser()
@@ -14,7 +15,8 @@ export async function DashboardContent() {
 
         <div className="flex items-center justify-center gap-7 mb-5">
 
-          <Image alt="DevNotes" src={logo} width={64} height={64} priority className="w-10 h-10 md:w-15 md:h-15 shrink-0 select-none"/>
+          <Image alt="DevNotes" src={logoPreto} width={64} height={64} priority className="w-10 h-10 md:w-15 md:h-15 shrink-0 select-none block light:hidden"/>
+          <Image alt="DevNotes" src={logoBranco} width={64} height={64} priority className="w-10 h-10 md:w-15 md:h-15 shrink-0 select-none hidden light:block"/>
 
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-lighter tracking-tight text-center">
             As tuas DevNotes <span className="text-mid2 font-light">-</span> {user?.name}
